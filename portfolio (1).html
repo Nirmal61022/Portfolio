@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nirmal Kumar P M — Luxury Mechatronics Portfolio</title>
+<style>
+  :root{
+    --bg:#050508;
+    --card:#0d0d18;
+    --card-hover:#161628;
+    --accent:#b026ff;
+    --accent2:#00e5ff;
+    --accent-glow:#d17bff;
+    --accent-grad:linear-gradient(90deg,#b026ff,#00e5ff);
+    --text:#ffffff;
+    --subtext:#8790ad;
+    --border:#23233a;
+    --green:#00ff9d;
+    --red:#ff4d7e;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    display:flex;
+    overflow:hidden;
+  }
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    width:260px;
+    min-width:260px;
+    height:100vh;
+    background:var(--card);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    position:relative;
+    border-right:1px solid var(--border);
+  }
+  .status{display:flex;align-items:center;gap:6px;margin-top:25px;}
+  .status-dot{width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green), 0 0 16px var(--green);animation:pulseDot 2s ease-in-out infinite;}
+  @keyframes pulseDot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.6;transform:scale(.85);}}
+  .status-text{color:var(--green);font-size:11px;font-weight:700;letter-spacing:.5px;font-family:Consolas, monospace;}
+
+  .badge-wrap{margin-top:14px;display:flex;flex-direction:column;align-items:center;}
+  .badge{
+    width:64px;height:64px;border-radius:14px;background:var(--accent-grad);color:#000;
+    display:flex;align-items:center;justify-content:center;
+    font-size:22px;font-weight:800;letter-spacing:1px;
+    overflow:hidden;box-shadow:0 0 18px rgba(176,38,255,.45), 0 0 28px rgba(0,229,255,.2);
+  }
+  .badge img{width:100%;height:100%;object-fit:cover;}
+  .badge-controls{margin-top:8px;display:flex;align-items:center;gap:6px;}
+
+  .name{margin-top:12px;font-size:16px;font-weight:700;}
+  .role{
+    margin-top:4px;margin-bottom:22px;font-size:12px;font-weight:700;letter-spacing:.3px;
+    background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .nav{width:100%;display:flex;flex-direction:column;}
+  .nav-btn{
+    width:100%;background:none;border:none;color:var(--text);text-align:left;
+    padding:13px 26px;font-size:14px;font-weight:600;cursor:pointer;
+    display:flex;align-items:center;gap:12px;border-left:4px solid transparent;
+    transition:background .2s ease, color .2s ease, border-color .2s ease;
+    position:relative;
+  }
+  .nav-btn:hover{background:var(--card-hover);color:var(--accent2);}
+  .nav-btn.active{background:var(--card-hover);color:var(--accent-glow);border-left-color:var(--accent);
+    box-shadow:inset 0 0 20px rgba(176,38,255,.12);}
+  .sidebar-footer{margin-top:auto;width:100%;padding:20px 18px 26px;}
+  #editToggleBtn{
+    width:100%;padding:11px 10px;background:var(--card-hover);color:var(--accent2);
+    border:1px solid var(--border);font-weight:700;font-size:13px;border-radius:6px;
+    cursor:pointer;transition:all .15s ease;
+  }
+  #editToggleBtn:hover{border-color:var(--accent2);box-shadow:0 0 12px rgba(0,229,255,.25);}
+  #editToggleBtn.on{background:#1c0a2e;color:var(--accent-glow);border-color:var(--accent);box-shadow:0 0 14px rgba(176,38,255,.35);}
+
+  /* ---------- MAIN AREA ---------- */
+  .main{flex:1;position:relative;height:100vh;overflow:hidden;}
+  canvas#bg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;}
+  .content{position:absolute;top:0;left:0;right:0;bottom:0;overflow-y:auto;padding:0 0 60px;z-index:2;}
+  .section{display:none;}
+  .section.active{display:block;}
+  .section.active.slide-right{animation:slideInRight .5s cubic-bezier(.16,1,.3,1);}
+  .section.active.slide-left{animation:slideInLeft .5s cubic-bezier(.16,1,.3,1);}
+  @keyframes slideInRight{
+    0%{opacity:0;transform:translateX(60px);}
+    100%{opacity:1;transform:translateX(0);}
+  }
+  @keyframes slideInLeft{
+    0%{opacity:0;transform:translateX(-60px);}
+    100%{opacity:1;transform:translateX(0);}
+  }
+  .page-header{padding:35px 40px 15px;}
+  .eyebrow{
+    font-family:Consolas, monospace;font-size:11px;font-weight:700;letter-spacing:1px;
+    background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .title{
+    font-size:30px;font-weight:800;margin-top:6px;letter-spacing:.3px;
+    text-shadow:0 0 22px rgba(176,38,255,.35);
+  }
+  .edit-banner{display:none;color:var(--red);font-family:Consolas,monospace;font-size:11px;font-weight:700;margin-top:8px;}
+  body.edit-mode .edit-banner{display:block;}
+
+  .card{
+    margin:0 40px 22px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:22px 26px;
+    transition:border-color .25s ease, box-shadow .25s ease;
+  }
+  .card:hover{border-color:#3a2a52;box-shadow:0 0 24px rgba(176,38,255,.08);}
+  .tagline{color:var(--accent2);font-family:Consolas,monospace;font-weight:700;font-size:13px;margin-bottom:10px;}
+
+  /* ---------- HOME: 50/50 split ---------- */
+  .home-grid{display:flex;gap:26px;margin:0 40px 22px;flex-wrap:wrap;align-items:stretch;}
+  .home-text{flex:1 1 50%;min-width:280px;display:flex;}
+  .home-text .card{margin:0;flex:1;}
+  .home-media{flex:1 1 50%;min-width:280px;}
+  .home-media .image-box{margin-top:0;height:100%;}
+  .home-media .image-box img{width:100%;height:100%;min-height:320px;max-height:none;object-fit:cover;border-radius:10px;}
+  .home-media .image-placeholder{height:100%;min-height:320px;margin-top:0;display:none;align-items:center;justify-content:center;}
+  .home-media .image-placeholder.show{display:flex;}
+
+  /* ---------- ALL OTHER TABS: text/content column capped to 2/3 width ---------- */
+  .section:not(#sec-home) > .page-header,
+  .section:not(#sec-home) > .card,
+  .section:not(#sec-home) > .stats-row,
+  .section:not(#sec-home) > #skillsList,
+  .section:not(#sec-home) > .week-tabs,
+  .section:not(#sec-home) > #weekDetail,
+  .section:not(#sec-home) > .add-btn,
+  .section:not(#sec-home) > .save-bar{
+    max-width:66%;
+  }
+  .bio-text, .about-text, p.text{line-height:1.6;font-size:14.5px;color:var(--text);}
+  .targets-label{color:var(--accent2);font-family:Consolas,monospace;font-size:11px;font-weight:700;margin-bottom:8px;}
+  .targets{font-weight:700;font-size:13.5px;}
+
+  .stats-row{display:flex;gap:12px;margin:0 40px 22px;flex-wrap:wrap;}
+  .stat-card{
+    flex:1;min-width:150px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px;text-align:center;
+    transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .stat-card:hover{transform:translateY(-3px);border-color:var(--accent2);box-shadow:0 6px 24px rgba(0,229,255,.15);}
+  .stat-value{
+    font-size:17px;font-weight:800;
+    background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .stat-label{color:var(--subtext);font-size:11px;margin-top:5px;}
+
+  .skill-row{
+    margin:0 40px 14px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 20px;
+    border-left:3px solid var(--accent);transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+  }
+  .skill-row:hover{border-color:var(--accent2);border-left-color:var(--accent2);transform:translateX(3px);box-shadow:0 4px 18px rgba(176,38,255,.12);}
+  .skill-top{display:flex;justify-content:space-between;align-items:center;gap:12px;}
+  .skill-name{font-weight:700;font-size:14px;color:var(--accent-glow);}
+  .skill-desc{color:var(--subtext);font-size:13px;line-height:1.55;margin-top:8px;}
+
+  .bullet{padding:5px 0;font-size:13.5px;line-height:1.5;color:var(--text);}
+  .math-box{background:#07070d;border:1px solid var(--border);border-radius:6px;padding:14px 16px;margin-top:8px;}
+  .math-label{color:var(--accent2);font-family:Consolas,monospace;font-size:11px;font-weight:700;margin-bottom:6px;}
+  .math-line{font-family:Consolas,monospace;font-size:12.5px;padding:3px 0;color:var(--text);}
+
+  .week-card{
+    margin:0 40px 16px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 22px;
+    transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  .week-card:hover{border-color:var(--accent);box-shadow:0 4px 20px rgba(176,38,255,.1);}
+  .week-tag{color:var(--accent2);font-family:Consolas,monospace;font-size:11px;font-weight:700;}
+  .week-title{font-weight:700;font-size:15px;margin:4px 0;}
+  .week-desc{color:var(--subtext);font-size:13px;line-height:1.5;}
+
+  /* ---------- PROTOSEM WEEK SUB-TABS ---------- */
+  .week-tabs{display:flex;gap:10px;flex-wrap:wrap;margin:0 40px 20px;}
+  .week-tab{
+    position:relative;background:var(--card);border:1px solid var(--border);color:var(--text);
+    padding:10px 30px 10px 16px;border-radius:8px;cursor:pointer;text-align:left;
+    display:flex;flex-direction:column;gap:2px;transition:all .2s ease;font-family:inherit;
+  }
+  .week-tab .wt-tag{font-family:Consolas,monospace;font-size:10px;color:var(--accent2);font-weight:700;letter-spacing:.5px;}
+  .week-tab .wt-title{font-size:13px;font-weight:700;color:var(--text);max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .week-tab:hover{border-color:var(--accent2);box-shadow:0 0 12px rgba(0,229,255,.2);}
+  .week-tab.active{border-color:var(--accent);background:var(--card-hover);box-shadow:0 0 16px rgba(176,38,255,.35);}
+  .week-tab.active .wt-tag{color:var(--accent-glow);}
+  .week-tab .del-btn{position:absolute;top:-8px;right:-8px;background:var(--bg);}
+
+  .week-detail-card{animation:weekDetailIn .4s cubic-bezier(.16,1,.3,1);}
+  @keyframes weekDetailIn{
+    0%{opacity:0;transform:translateX(16px);}
+    100%{opacity:1;transform:translateX(0);}
+  }
+  .week-detail-empty{margin:0 40px 22px;color:var(--subtext);font-size:13.5px;}
+
+  .contact-row{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 0;flex-wrap:nowrap;border-bottom:1px solid var(--border);}
+  .contact-row:last-child{border-bottom:none;}
+  .contact-label{font-weight:700;font-size:14px;display:flex;align-items:center;gap:12px;flex:1 1 auto;min-width:0;}
+  .contact-label span.editable{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .contact-row .btn{flex:none;min-width:132px;text-align:center;}
+  .contact-icon{
+    width:36px;height:36px;flex:none;border-radius:9px;display:flex;align-items:center;justify-content:center;
+    background:var(--card-hover);border:1px solid var(--border);color:var(--accent2);
+  }
+  .contact-icon svg{width:18px;height:18px;}
+  .btn{
+    background:var(--accent-grad);color:#fff;border:none;border-radius:6px;padding:9px 16px;font-weight:700;
+    font-size:12px;cursor:pointer;white-space:nowrap;transition:filter .15s ease, box-shadow .15s ease, transform .15s ease;
+  }
+  .btn:hover{filter:brightness(1.15);box-shadow:0 0 16px rgba(176,38,255,.4);transform:translateY(-1px);}
+  .btn-outline{background:transparent;border:1px solid var(--border);color:var(--text);}
+  .small-btn{padding:6px 10px;font-size:11px;border-radius:4px;cursor:pointer;display:inline-block;}
+
+  /* editable styling */
+  body.edit-mode .editable{
+    outline:1px dashed var(--accent2);background:#161628;border-radius:3px;
+    padding:2px 6px;cursor:text;min-width:20px;display:inline-block;
+  }
+  body.edit-mode .editable.block{display:block;width:100%;}
+
+  .edit-only{display:none;}
+  body.edit-mode .edit-only{display:inline-flex;}
+  .del-btn{
+    background:none;border:1px solid var(--red);color:var(--red);border-radius:50%;
+    width:22px;height:22px;line-height:1;font-size:12px;cursor:pointer;
+    align-items:center;justify-content:center;margin-left:10px;
+  }
+  .add-btn{
+    margin:0 40px 30px;background:transparent;border:1px dashed var(--accent);color:var(--accent-glow);
+    padding:9px 16px;border-radius:6px;font-weight:700;font-size:12.5px;cursor:pointer;transition:all .15s ease;
+  }
+  .add-btn:hover{background:var(--card-hover);box-shadow:0 0 14px rgba(176,38,255,.25);}
+
+  .save-bar{display:none;margin:10px 40px 34px;}
+  body.edit-mode .save-bar{display:block;}
+
+  /* image blocks */
+  .image-box{margin-top:14px;}
+  .image-box img{width:100%;max-height:340px;object-fit:cover;border-radius:6px;border:1px solid var(--border);display:block;}
+  .image-placeholder{
+    display:none;margin-top:14px;padding:26px;text-align:center;color:var(--subtext);
+    border:1px dashed var(--border);border-radius:6px;font-size:12.5px;
+  }
+  body.edit-mode .image-placeholder.show{display:block;}
+  .image-controls{display:none;gap:10px;margin-top:12px;align-items:center;}
+  body.edit-mode .image-controls{display:flex;}
+  .week-image-wrap{margin-top:10px;}
+  .week-image-wrap img{width:100%;max-height:260px;object-fit:cover;border-radius:6px;border:1px solid var(--border);}
+
+  #toast{
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--card);border:1px solid var(--accent);color:var(--accent-glow);
+    padding:12px 22px;border-radius:6px;font-size:13px;font-weight:600;
+    opacity:0;pointer-events:none;transition:all .25s ease;z-index:50;
+    box-shadow:0 0 24px rgba(176,38,255,.3);
+  }
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  ::-webkit-scrollbar{width:9px;}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:5px;}
+  ::-webkit-scrollbar-thumb:hover{background:var(--accent);}
+
+  /* subtle techy circuit grid behind the particle canvas */
+  .main::before{
+    content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+    background-image:
+      linear-gradient(rgba(176,38,255,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,.05) 1px, transparent 1px);
+    background-size:44px 44px;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 90%);
+  }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="status"><div class="status-dot"></div><div class="status-text">SYSTEM ONLINE</div></div>
+
+  <div class="badge-wrap">
+    <div class="badge" id="badgeBox">NK</div>
+    <div class="badge-controls edit-only">
+      <label class="btn btn-outline small-btn" for="badgeUpload">📷 Photo</label>
+      <input type="file" id="badgeUpload" accept="image/*" style="display:none" onchange="handleImageUpload(event,'profile_image', renderBadge)">
+      <button class="del-btn" onclick="removeImage('profile_image', renderBadge)" title="Remove photo">×</button>
+    </div>
+  </div>
+
+  <div class="name">Nirmal Kumar P M</div>
+  <div class="role">Mechatronics Engineer</div>
+  <nav class="nav" id="nav">
+    <button class="nav-btn active" data-section="home">🏠&nbsp;&nbsp;Home</button>
+    <button class="nav-btn" data-section="about">👤&nbsp;&nbsp;About</button>
+    <button class="nav-btn" data-section="skills">⚡&nbsp;&nbsp;Skills</button>
+    <button class="nav-btn" data-section="experience">💼&nbsp;&nbsp;Experience</button>
+    <button class="nav-btn" data-section="projects">🚀&nbsp;&nbsp;Projects</button>
+    <button class="nav-btn" data-section="protosem">📑&nbsp;&nbsp;ProtoSem</button>
+    <button class="nav-btn" data-section="contact">📬&nbsp;&nbsp;Contact</button>
+  </nav>
+  <div class="sidebar-footer">
+    <button id="editToggleBtn">✏️ Enable Edit Mode</button>
+  </div>
+</div>
+
+<div class="main">
+  <canvas id="bg"></canvas>
+  <div class="content" id="content">
+
+    <!-- HOME -->
+    <section class="section active" id="sec-home">
+      <div class="page-header">
+        <div class="eyebrow">// SYSTEM OVERVIEW</div>
+        <div class="title">NIRMAL KUMAR P M</div>
+        <div class="edit-banner">EDIT MODE ON — click any highlighted text to change it, or use the 📷 button to add a photo, then hit Save Changes</div>
+      </div>
+      <div class="home-grid">
+        <div class="home-text">
+          <div class="card">
+            <div class="tagline editable" contenteditable="false" data-key="tagline"></div>
+            <p class="bio-text editable block" contenteditable="false" data-key="bio"></p>
+          </div>
+        </div>
+        <div class="home-media">
+          <div class="image-box" id="homeImageBox"></div>
+          <div class="image-placeholder" id="homePlaceholder">No photo added yet</div>
+          <div class="image-controls">
+            <label class="btn small-btn" for="homeUpload">📷 Add / Change Photo</label>
+            <input type="file" id="homeUpload" accept="image/*" style="display:none" onchange="handleImageUpload(event,'home_image', renderHomeImage)">
+            <button class="del-btn" onclick="removeImage('home_image', renderHomeImage)" title="Remove photo">×</button>
+          </div>
+        </div>
+      </div>
+      <div class="save-bar"><button class="btn" onclick="saveAll()">💾 Save Changes</button></div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="sec-about">
+      <div class="page-header">
+        <div class="eyebrow">// ENGINEER PROFILE</div>
+        <div class="title">About Me</div>
+        <div class="edit-banner">EDIT MODE ON — click any highlighted text to change it, then hit Save Changes</div>
+      </div>
+      <div class="card">
+        <p class="about-text editable block" contenteditable="false" data-key="about"></p>
+      </div>
+      <div class="stats-row" id="statsRow"></div>
+      <div class="save-bar"><button class="btn" onclick="saveAll()">💾 Save Changes</button></div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section" id="sec-skills">
+      <div class="page-header">
+        <div class="eyebrow">// TECHNICAL MATRIX</div>
+        <div class="title">Engineering Skills</div>
+        <div class="edit-banner">EDIT MODE ON — edit the name / description text, then hit Save Changes</div>
+      </div>
+      <div id="skillsList"></div>
+      <button class="add-btn edit-only" onclick="addSkill()">+ Add Skill</button>
+      <div class="save-bar"><button class="btn" onclick="saveAll()">💾 Save Changes</button></div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="section" id="sec-experience">
+      <div class="page-header">
+        <div class="eyebrow">// CAREER MILESTONES</div>
+        <div class="title">Industrial Experience</div>
+        <div class="edit-banner">EDIT MODE ON — click any highlighted text to change it, or use the photo button, then hit Save Changes</div>
+      </div>
+      <div class="card">
+        <div class="targets editable" contenteditable="false" data-key="experience_title" style="color:var(--accent);font-size:15px;margin-bottom:6px;"></div>
+        <div class="editable" contenteditable="false" data-key="experience_tag" style="color:var(--subtext);font-family:Consolas,monospace;font-size:11px;margin-bottom:10px;"></div>
+        <div id="bulletsList"></div>
+        <button class="add-btn edit-only" onclick="addBullet()">+ Add Bullet</button>
+
+        <div class="image-box" id="experienceImageBox"></div>
+        <div class="image-placeholder" id="experiencePlaceholder">No photo added yet</div>
+        <div class="image-controls">
+          <label class="btn small-btn" for="expUpload">📷 Add / Change Photo</label>
+          <input type="file" id="expUpload" accept="image/*" style="display:none" onchange="handleImageUpload(event,'experience_image', renderExperienceImage)">
+          <button class="del-btn" onclick="removeImage('experience_image', renderExperienceImage)" title="Remove photo">×</button>
+        </div>
+      </div>
+      <div class="save-bar"><button class="btn" onclick="saveAll()">💾 Save Changes</button></div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section" id="sec-projects">
+      <div class="page-header">
+        <div class="eyebrow">// CAD SHOWCASE</div>
+        <div class="title">Featured Projects</div>
+        <div class="edit-banner">EDIT MODE ON — click any highlighted text to change it, or use the photo button, then hit Save Changes</div>
+      </div>
+      <div class="card">
+        <div class="editable" contenteditable="false" data-key="project_title" style="color:var(--accent);font-size:17px;font-weight:800;margin-bottom:8px;"></div>
+        <p class="text editable block" contenteditable="false" data-key="project_objective" style="font-style:italic;"></p>
+
+        <div class="image-box" id="projectImageBox"></div>
+        <div class="image-placeholder" id="projectPlaceholder">No photo added yet</div>
+        <div class="image-controls">
+          <label class="btn small-btn" for="projUpload">📷 Add / Change Photo</label>
+          <input type="file" id="projUpload" accept="image/*" style="display:none" onchange="handleImageUpload(event,'project_image', renderProjectImage)">
+          <button class="del-btn" onclick="removeImage('project_image', renderProjectImage)" title="Remove photo">×</button>
+        </div>
+
+        <div class="math-box">
+          <div class="math-label">// ENGINEERING MATH &amp; STABILITY CALCULATIONS</div>
+          <div id="mathList"></div>
+          <button class="add-btn edit-only" style="margin:10px 0 0;" onclick="addMath()">+ Add Line</button>
+        </div>
+      </div>
+      <div class="save-bar"><button class="btn" onclick="saveAll()">💾 Save Changes</button></div>
+    </section>
+
+    <!-- PROTOSEM -->
+    <section class="section" id="sec-protosem">
+      <div class="page-header">
+        <div class="eyebrow">// ENGINEERING JOURNAL</div>
+        <div class="title">ProtoSem Log</div>
+        <div class="edit-banner">EDIT MODE ON — click a week tab to open it, edit its title, description or photo, then hit Save Changes</div>
+      </div>
+      <div class="week-tabs" id="weekTabs"></div>
+      <div id="weekDetail"></div>
+      <button class="add-btn edit-only" onclick="addWeek()">+ Add Week</button>
+      <div class="save-bar"><button class="btn" onclick="saveAll()">💾 Save Changes</button></div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="sec-contact">
+      <div class="page-header">
+        <div class="eyebrow">// COMMUNICATIONS</div>
+        <div class="title">Contact Me</div>
+        <div class="edit-banner">EDIT MODE ON — click any highlighted text to change it, then hit Save Changes</div>
+      </div>
+      <div class="card">
+        <div class="contact-row">
+          <div class="contact-label">
+            <span class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z" stroke="none"/><path d="M4 6l8 7 8-7"/><rect x="4" y="6" width="16" height="12" rx="1.5"/></svg>
+            </span>
+            Email: <span class="editable" contenteditable="false" data-key="email"></span>
+          </div>
+          <button class="btn" onclick="copyText(state.email,'Email')">Copy Email</button>
+        </div>
+        <div class="contact-row">
+          <div class="contact-label">
+            <span class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"/></svg>
+            </span>
+            Phone: <span class="editable" contenteditable="false" data-key="phone"></span>
+          </div>
+          <button class="btn" onclick="copyText(state.phone,'Phone')">Copy Phone</button>
+        </div>
+        <div class="contact-row">
+          <div class="contact-label">
+            <span class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+            </span>
+            LinkedIn : <span class="editable" contenteditable="false" data-key="linkedin"></span>
+          </div>
+          <button class="btn" onclick="copyText(state.linkedin,'LinkedIn link')">Copy Link</button>
+        </div>
+      </div>
+      <div class="save-bar"><button class="btn" onclick="saveAll()">💾 Save Changes</button></div>
+    </section>
+
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ============ DEFAULT DATA ============ */
+const DEFAULTS = {
+  profile_image: "",
+  home_image: "",
+  tagline: "MECHATRONICS ENGINEER  |  CAD DESIGNER  |  ROBOTICS",
+  bio: "Transforming complex mechanical concepts into high-precision, manufacture-ready CAD models. Specializing in 3DEXPERIENCE CATIA, SolidWorks, surface modeling, and sheet metal design for next-generation automotive & robotic systems.",
+  stats: [
+    ["3rd Year", "Mechatronics Student"],
+    ["CATIA & SolidWorks", "CAD Platforms Mastered"],
+    ["Dassault Systems", "Certified Internship"],
+    ["100%", "Manufacturability Focus"]
+  ],
+  about: "I am a passionate third-year Mechatronics Engineering student with a strong interest in mechanical product design, CAD modelling, robotics, and industrial automation. I enjoy transforming engineering concepts into practical designs using CAD software such as CATIA and SolidWorks. Through internships and academic projects, I have gained hands-on experience in manufacturing processes, sheet metal design, and surface modelling. My goal is to build innovative and reliable products while continuously developing my technical and problem-solving skills.",
+  skills: [
+    ["3DEXPERIENCE CATIA", "Building manufacture-ready mechanical models and assemblies using 3DEXPERIENCE CATIA's part and surface design workbenches."],
+    ["SolidWorks 3D Modeling", "Designing parametric 3D parts and assemblies in SolidWorks, from concept sketches through to finished models."],
+    ["Mechanical Product Design", "Translating product requirements into functional mechanical components, housings, and multi-part assemblies."],
+    ["Advanced Surface Modelling (GSD)", "Creating Class-A style curved surfaces with lofts, sweeps, and G0/G1/G2 continuity in Generative Shape Design."],
+    ["Sheet Metal Design & Bending", "Applying bend allowances, punch/die clearances, and flat-pattern DXF outputs for manufacturable sheet metal parts."],
+    ["2D CAD Drafting & Detailing", "Producing clear, production-ready 2D drawings and detailed part documentation from 3D models."],
+    ["GD&T Basics (ASME Y14.5)", "Applying geometric dimensioning and tolerancing callouts to communicate fit, form, and function on drawings."]
+  ],
+  experience_title: "CAD Design Intern — CADD Centre",
+  experience_tag: "[CERTIFIED INDUSTRIAL CAD INTERNSHIP]",
+  experience_bullets: [
+    "▹ Mechanical Component Design: Machine parts, gearboxes, housing enclosures, and multi-part sub-assemblies.",
+    "▹ Sheet Metal Design: Punch/die clearance, bend allowances, and flat pattern DXF outputs.",
+    "▹ Advanced Surface Modelling: Developed Class-A style curved surfaces using CATIA Generative Shape Design (GSD).",
+    "▹ Drafting & GD&T: 2D production drawings with ASME Y14.5 tolerance callouts and Bill of Materials (BOM)."
+  ],
+  experience_image: "",
+  project_title: "Telescopic Pole with Lead Screw Mechanism",
+  project_objective: "Objective: Designed a telescopic lifting mechanism capable of raising a camera system using a lead screw while maintaining structural stability under wind loads.",
+  project_image: "",
+  math_details: [
+    "1. Lead Screw Torque Required: T_raise = (F * dm / 2) * [(π * μ * dm + L) / (π * dm - μ * L)]",
+    "2. Self-Locking Condition: tan(λ) < μ  (Failsafe elevational lock without power)",
+    "3. Wind Drag & Bending Moment: F_wind = 0.5 * ρ * v² * A * Cd  ==>  σ_max = M * y / I"
+  ],
+  protosem: [
+    { tag: "WEEK 01", title: "Orientation & Industrial Automation Architecture", desc: "Explored PLC ladder logic, sensor mapping, and pneumatic actuator selection.", image: "" },
+    { tag: "WEEK 02", title: "Surface Modelling & Aerodynamic Shell Design", desc: "Mastered Generative Shape Design (GSD) lofts, sweeps, and G0/G1/G2 continuity in CATIA.", image: "" }
+  ],
+  email: "nirmalkumarclg256@gmail.com",
+  phone: "+91 6385530719",
+  linkedin: "https://www.linkedin.com/in/nirmal-kumar-2a4a55327?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+};
+
+const STORAGE_KEY = "nk_portfolio_data_v4";
+let state = loadState();
+let editMode = false;
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) return Object.assign(JSON.parse(JSON.stringify(DEFAULTS)), JSON.parse(raw));
+  }catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULTS));
+}
+function persist(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+
+/* ============ SIMPLE TEXT FIELDS ============ */
+function bindSimpleFields(){
+  document.querySelectorAll('[data-key]').forEach(el=>{
+    const key = el.getAttribute('data-key');
+    if(['stats','skills','experience_bullets','math_details','protosem'].includes(key)) return;
+    el.textContent = state[key] ?? "";
+    el.addEventListener('input', ()=>{ state[key] = el.textContent.trim(); });
+  });
+}
+
+/* ============ IMAGE HELPERS ============ */
+function handleImageUpload(event, key, renderFn){
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e=>{
+    state[key] = e.target.result;
+    renderFn();
+    persist();
+    toast("Photo added!");
+  };
+  reader.readAsDataURL(file);
+  event.target.value = "";
+}
+function removeImage(key, renderFn){
+  state[key] = "";
+  renderFn();
+  persist();
+  toast("Photo removed.");
+}
+function renderBadge(){
+  const box = document.getElementById('badgeBox');
+  box.innerHTML = state.profile_image ? `<img src="${state.profile_image}" alt="Profile photo">` : "NK";
+}
+function renderHomeImage(){
+  const box = document.getElementById('homeImageBox');
+  const ph = document.getElementById('homePlaceholder');
+  if(state.home_image){
+    box.innerHTML = `<img src="${state.home_image}" alt="Home photo">`;
+    ph.classList.remove('show');
+  }else{
+    box.innerHTML = "";
+    ph.classList.add('show');
+  }
+}
+function renderExperienceImage(){
+  const box = document.getElementById('experienceImageBox');
+  const ph = document.getElementById('experiencePlaceholder');
+  if(state.experience_image){
+    box.innerHTML = `<img src="${state.experience_image}" alt="Experience photo">`;
+    ph.classList.remove('show');
+  }else{
+    box.innerHTML = "";
+    ph.classList.add('show');
+  }
+}
+function renderProjectImage(){
+  const box = document.getElementById('projectImageBox');
+  const ph = document.getElementById('projectPlaceholder');
+  if(state.project_image){
+    box.innerHTML = `<img src="${state.project_image}" alt="Project photo">`;
+    ph.classList.remove('show');
+  }else{
+    box.innerHTML = "";
+    ph.classList.add('show');
+  }
+}
+
+/* ============ DYNAMIC LISTS ============ */
+function renderStats(){
+  const row = document.getElementById('statsRow');
+  row.innerHTML = "";
+  state.stats.forEach((pair, i)=>{
+    const card = document.createElement('div');
+    card.className = 'stat-card';
+    card.innerHTML = `
+      <div class="stat-value editable" contenteditable="false" data-idx="${i}" data-field="value">${pair[0]}</div>
+      <div class="stat-label editable" contenteditable="false" data-idx="${i}" data-field="label">${pair[1]}</div>`;
+    row.appendChild(card);
+  });
+  row.querySelectorAll('.editable').forEach(el=>{
+    el.contentEditable = editMode;
+    el.addEventListener('input', ()=>{
+      const i = +el.getAttribute('data-idx');
+      const f = el.getAttribute('data-field');
+      state.stats[i][f === 'value' ? 0 : 1] = el.textContent.trim();
+    });
+  });
+}
+
+function renderSkills(){
+  const list = document.getElementById('skillsList');
+  list.innerHTML = "";
+  state.skills.forEach((s, i)=>{
+    const [name, desc] = s;
+    const row = document.createElement('div');
+    row.className = 'skill-row';
+    row.innerHTML = `
+      <div class="skill-top">
+        <div class="skill-name editable" contenteditable="false" data-idx="${i}" data-field="name">${name}</div>
+        <button class="del-btn edit-only" onclick="removeSkill(${i})">×</button>
+      </div>
+      <div class="skill-desc editable block" contenteditable="false" data-idx="${i}" data-field="desc">${desc}</div>`;
+    list.appendChild(row);
+  });
+  list.querySelectorAll('.editable').forEach(el=>{
+    el.contentEditable = editMode;
+    el.addEventListener('input', ()=>{
+      const i = +el.getAttribute('data-idx');
+      const f = el.getAttribute('data-field');
+      state.skills[i][f === 'name' ? 0 : 1] = el.textContent.trim();
+    });
+  });
+}
+
+function renderSimpleList(containerId, arrKey, lineClass, removeFn){
+  const list = document.getElementById(containerId);
+  list.innerHTML = "";
+  state[arrKey].forEach((line, i)=>{
+    const row = document.createElement('div');
+    row.style.display = 'flex';
+    row.style.alignItems = 'center';
+    row.innerHTML = `
+      <div class="${lineClass} editable" contenteditable="false" data-idx="${i}" style="flex:1;">${line}</div>
+      <button class="del-btn edit-only" onclick="${removeFn}(${i})">×</button>`;
+    list.appendChild(row);
+  });
+  list.querySelectorAll('.editable').forEach(el=>{
+    el.contentEditable = editMode;
+    el.addEventListener('input', ()=>{
+      state[arrKey][+el.getAttribute('data-idx')] = el.textContent.trim();
+    });
+  });
+}
+function renderBullets(){ renderSimpleList('bulletsList', 'experience_bullets', 'bullet', 'removeBullet'); }
+function renderMath(){ renderSimpleList('mathList', 'math_details', 'math-line', 'removeMath'); }
+
+let activeWeek = 0;
+
+function renderProtosem(){
+  const tabsEl = document.getElementById('weekTabs');
+  tabsEl.innerHTML = "";
+
+  if(!state.protosem.length){
+    document.getElementById('weekDetail').innerHTML = `<div class="week-detail-empty">No weeks yet — click "+ Add Week" to start your log.</div>`;
+    return;
+  }
+  if(activeWeek >= state.protosem.length) activeWeek = state.protosem.length - 1;
+  if(activeWeek < 0) activeWeek = 0;
+
+  state.protosem.forEach((wk, i)=>{
+    const tab = document.createElement('button');
+    tab.type = "button";
+    tab.className = 'week-tab' + (i === activeWeek ? ' active' : '');
+    tab.innerHTML = `
+      <span class="wt-tag">${wk.tag}</span>
+      <span class="wt-title">${wk.title}</span>
+      <button class="del-btn edit-only" title="Remove week">×</button>`;
+    tab.addEventListener('click', ()=>{ activeWeek = i; renderProtosem(); });
+    tab.querySelector('.del-btn').addEventListener('click', (ev)=>{
+      ev.stopPropagation();
+      removeWeek(i);
+    });
+    tabsEl.appendChild(tab);
+  });
+
+  renderWeekDetail();
+}
+
+function renderWeekDetail(){
+  const i = activeWeek;
+  const wk = state.protosem[i];
+  const detail = document.getElementById('weekDetail');
+  detail.innerHTML = `
+    <div class="week-card week-detail-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div style="flex:1;">
+          <div class="week-tag editable" contenteditable="false" data-idx="${i}" data-field="tag">${wk.tag}</div>
+          <div class="week-title editable" contenteditable="false" data-idx="${i}" data-field="title" style="font-size:18px;">${wk.title}</div>
+          <div class="week-desc editable block" contenteditable="false" data-idx="${i}" data-field="desc" style="margin-top:8px;">${wk.desc}</div>
+        </div>
+      </div>
+      <div class="image-box" id="weekImageBox"></div>
+      <div class="image-placeholder" id="weekPlaceholder">No photo added yet</div>
+      <div class="image-controls">
+        <label class="btn small-btn" for="weekUpload">📷 Add / Change Photo</label>
+        <input type="file" id="weekUpload" accept="image/*" style="display:none">
+        <button class="del-btn" id="weekImgRemove" title="Remove photo">×</button>
+      </div>
+    </div>`;
+
+  const imgBox = detail.querySelector('#weekImageBox');
+  const imgPh = detail.querySelector('#weekPlaceholder');
+  if(wk.image){
+    imgBox.innerHTML = `<img src="${wk.image}" alt="Week photo">`;
+    imgPh.classList.remove('show');
+  }else{
+    imgBox.innerHTML = "";
+    imgPh.classList.add('show');
+  }
+
+  detail.querySelector('#weekUpload').addEventListener('change', (event)=>{
+    const file = event.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = e=>{
+      state.protosem[activeWeek].image = e.target.result;
+      renderWeekDetail();
+      persist();
+      toast("Photo added!");
+    };
+    reader.readAsDataURL(file);
+  });
+  detail.querySelector('#weekImgRemove').addEventListener('click', ()=>{
+    state.protosem[activeWeek].image = "";
+    renderWeekDetail();
+    persist();
+    toast("Photo removed.");
+  });
+
+  detail.querySelectorAll('.editable').forEach(el=>{
+    el.contentEditable = editMode;
+    el.addEventListener('input', ()=>{
+      const idx = +el.getAttribute('data-idx');
+      const f = el.getAttribute('data-field');
+      state.protosem[idx][f] = el.textContent.trim();
+      const tabsEl = document.getElementById('weekTabs');
+      const tabEl = tabsEl.children[idx];
+      if(tabEl){
+        if(f === 'tag') tabEl.querySelector('.wt-tag').textContent = state.protosem[idx].tag;
+        if(f === 'title') tabEl.querySelector('.wt-title').textContent = state.protosem[idx].title;
+      }
+    });
+  });
+}
+
+function renderAllDynamic(){
+  renderBadge();
+  renderHomeImage();
+  renderExperienceImage();
+  renderProjectImage();
+  renderStats();
+  renderSkills();
+  renderBullets();
+  renderMath();
+  renderProtosem();
+}
+
+/* ============ ADD / REMOVE ============ */
+function addSkill(){ state.skills.push(["New Skill", "Describe your experience and proficiency with this skill."]); renderSkills(); }
+function removeSkill(i){ state.skills.splice(i,1); renderSkills(); }
+function addBullet(){ state.experience_bullets.push("▹ New bullet point"); renderBullets(); }
+function removeBullet(i){ state.experience_bullets.splice(i,1); renderBullets(); }
+function addMath(){ state.math_details.push("New formula line"); renderMath(); }
+function removeMath(i){ state.math_details.splice(i,1); renderMath(); }
+function addWeek(){
+  const n = state.protosem.length;
+  state.protosem.push({tag:"WEEK "+String(n+1).padStart(2,'0'), title:"New week title", desc:"New week description.", image:""});
+  activeWeek = n;
+  renderProtosem();
+}
+function removeWeek(i){
+  state.protosem.splice(i,1);
+  if(activeWeek >= state.protosem.length) activeWeek = Math.max(0, state.protosem.length-1);
+  renderProtosem();
+}
+
+/* ============ SAVE / TOAST ============ */
+function saveAll(){ persist(); toast("Changes saved!"); }
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 1800);
+}
+
+/* ============ EDIT MODE ============ */
+document.getElementById('editToggleBtn').addEventListener('click', ()=>{
+  editMode = !editMode;
+  document.body.classList.toggle('edit-mode', editMode);
+  const btn = document.getElementById('editToggleBtn');
+  btn.textContent = editMode ? "✅ Editing — Click to Exit" : "✏️ Enable Edit Mode";
+  btn.classList.toggle('on', editMode);
+  document.querySelectorAll('.editable').forEach(el=>{ el.contentEditable = editMode; });
+  renderAllDynamic();
+});
+
+/* ============ NAV ============ */
+const NAV_ORDER = ['home','about','skills','experience','projects','protosem','contact'];
+let currentSectionIndex = 0;
+document.getElementById('nav').addEventListener('click', (e)=>{
+  const btn = e.target.closest('.nav-btn');
+  if(!btn) return;
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const target = btn.getAttribute('data-section');
+  const newIndex = NAV_ORDER.indexOf(target);
+  const dir = newIndex >= currentSectionIndex ? 'slide-right' : 'slide-left';
+  currentSectionIndex = newIndex;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active','slide-right','slide-left'));
+  document.getElementById('sec-'+target).classList.add('active', dir);
+  if(target === 'skills') renderSkills();
+});
+
+/* ============ CONTACT ACTIONS ============ */
+function copyText(text, label){
+  navigator.clipboard.writeText(text).then(()=>toast(`${label} copied to clipboard!`))
+    .catch(()=>toast("Couldn't copy — please copy manually."));
+}
+
+/* ============ ANIMATED NEON PARTICLE MESH BACKGROUND ============ */
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resizeCanvas(){
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+}
+const NEON_A = [176,38,255];   // purple
+const NEON_B = [0,229,255];    // cyan/blue
+let pulseT = 0;
+
+function initParticles(){
+  particles = [];
+  const count = Math.max(28, Math.round((canvas.width*canvas.height)/34000));
+  for(let i=0;i<count;i++){
+    particles.push({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height,
+      vx: (Math.random()-0.5)*0.45,
+      vy: (Math.random()-0.5)*0.45,
+      r: 1.4 + Math.random()*1.8,
+      mix: Math.random(),          // 0 = purple, 1 = cyan
+      phase: Math.random()*Math.PI*2
+    });
+  }
+}
+function lerpColor(a,b,t){
+  return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t];
+}
+function animateBG(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  pulseT += 0.02;
+
+  // connective circuit lines
+  for(let i=0;i<particles.length;i++){
+    const p1 = particles[i];
+    p1.x += p1.vx; p1.y += p1.vy;
+    if(p1.x < 0 || p1.x > canvas.width) p1.vx *= -1;
+    if(p1.y < 0 || p1.y > canvas.height) p1.vy *= -1;
+    for(let j=i+1;j<particles.length;j++){
+      const p2 = particles[j];
+      const dx = p1.x-p2.x, dy = p1.y-p2.y;
+      const dist = Math.sqrt(dx*dx+dy*dy);
+      if(dist < 135){
+        const alpha = (1 - dist/135) * 0.55;
+        const c1 = lerpColor(NEON_A, NEON_B, p1.mix);
+        const c2 = lerpColor(NEON_A, NEON_B, p2.mix);
+        const grad = ctx.createLinearGradient(p1.x,p1.y,p2.x,p2.y);
+        grad.addColorStop(0, `rgba(${c1[0]|0},${c1[1]|0},${c1[2]|0},${alpha})`);
+        grad.addColorStop(1, `rgba(${c2[0]|0},${c2[1]|0},${c2[2]|0},${alpha})`);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(p1.x,p1.y);
+        ctx.lineTo(p2.x,p2.y);
+        ctx.stroke();
+      }
+    }
+  }
+
+  // glowing nodes with a subtle pulse
+  for(const p of particles){
+    const c = lerpColor(NEON_A, NEON_B, p.mix);
+    const pulse = 0.75 + Math.sin(pulseT*2 + p.phase)*0.25;
+    const colorStr = `rgb(${c[0]|0},${c[1]|0},${c[2]|0})`;
+    ctx.shadowBlur = 10 * pulse;
+    ctx.shadowColor = colorStr;
+    ctx.fillStyle = colorStr;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r * pulse, 0, Math.PI*2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+  requestAnimationFrame(animateBG);
+}
+window.addEventListener('resize', ()=>{ resizeCanvas(); initParticles(); });
+
+/* ============ INIT ============ */
+bindSimpleFields();
+renderAllDynamic();
+resizeCanvas();
+initParticles();
+animateBG();
+</script>
+</body>
+</html>
