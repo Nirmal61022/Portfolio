@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Nirmal Kumar P M — Luxury Mechatronics Portfolio</title>
+<title>Nirmal Kumar P M — Portfolio</title>
 <style>
   :root{
     --bg:#050508;
@@ -418,11 +418,9 @@
       <div class="page-header">
         <div class="eyebrow">// ENGINEERING JOURNAL</div>
         <div class="title">ProtoSem Log</div>
-        <div class="edit-banner">EDIT MODE ON — click a week tab to open it, edit its title, description or photo, then hit Save Changes</div>
+        <div class="edit-banner">EDIT MODE ON — click WEEK 00 to open the ProtoSem document</div>
       </div>
       <div class="week-tabs" id="weekTabs"></div>
-      <div id="weekDetail"></div>
-      <button class="add-btn edit-only" onclick="addWeek()">+ Add Week</button>
       <div class="save-bar"><button class="btn" onclick="saveAll()">💾 Save Changes</button></div>
     </section>
 
@@ -675,30 +673,16 @@ function renderProtosem(){
   const tabsEl = document.getElementById('weekTabs');
   tabsEl.innerHTML = "";
 
-  if(!state.protosem.length){
-    document.getElementById('weekDetail').innerHTML = `<div class="week-detail-empty">No weeks yet — click "+ Add Week" to start your log.</div>`;
-    return;
-  }
-  if(activeWeek >= state.protosem.length) activeWeek = state.protosem.length - 1;
-  if(activeWeek < 0) activeWeek = 0;
-
-  state.protosem.forEach((wk, i)=>{
-    const tab = document.createElement('button');
-    tab.type = "button";
-    tab.className = 'week-tab' + (i === activeWeek ? ' active' : '');
-    tab.innerHTML = `
-      <span class="wt-tag">${wk.tag}</span>
-      <span class="wt-title">${wk.title}</span>
-      <button class="del-btn edit-only" title="Remove week">×</button>`;
-    tab.addEventListener('click', ()=>{ activeWeek = i; renderProtosem(); });
-    tab.querySelector('.del-btn').addEventListener('click', (ev)=>{
-      ev.stopPropagation();
-      removeWeek(i);
-    });
-    tabsEl.appendChild(tab);
+  const tab = document.createElement('button');
+  tab.type = "button";
+  tab.className = 'week-tab active';
+  tab.innerHTML = `
+    <span class="wt-tag">WEEK 00</span>
+    <span class="wt-title">ProtoSem Document</span>`;
+  tab.addEventListener('click', ()=>{
+    window.location.href = 'week%20assignments/Week00.html?refresh=3';
   });
-
-  renderWeekDetail();
+  tabsEl.appendChild(tab);
 }
 
 function renderWeekDetail(){
