@@ -162,9 +162,15 @@
   .skill-desc{color:var(--subtext);font-size:13px;line-height:1.55;margin-top:8px;}
 
   .bullet{padding:5px 0;font-size:13.5px;line-height:1.5;color:var(--text);}
-  .math-box{background:#07070d;border:1px solid var(--border);border-radius:6px;padding:14px 16px;margin-top:8px;}
-  .math-label{color:var(--accent2);font-family:Consolas,monospace;font-size:11px;font-weight:700;margin-bottom:6px;}
-  .math-line{font-family:Consolas,monospace;font-size:12.5px;padding:3px 0;color:var(--text);}
+  .project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;}
+  .project-item{background:var(--bg);border:1px solid var(--border);border-radius:7px;overflow:hidden;transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;}
+  .project-item:hover{border-color:var(--accent2);box-shadow:0 6px 22px rgba(0,229,255,.12);transform:translateY(-2px);}
+  .project-item img{display:block;width:100%;height:190px;object-fit:cover;border-bottom:1px solid var(--border);}
+  .project-item:nth-child(1) img,.project-item:nth-child(2) img{object-fit:contain;background:#e8ebf2;}
+  .project-copy{padding:15px 16px 17px;}
+  .project-copy h3{margin:0 0 7px;color:var(--accent-glow);font-size:15px;line-height:1.35;}
+  .project-copy p{margin:0;color:var(--subtext);font-size:12.5px;line-height:1.55;}
+  @media (max-width:760px){.project-grid{grid-template-columns:1fr;}.project-item img{height:auto;max-height:300px;}}
 
   .week-card{
     margin:0 40px 16px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 22px;
@@ -393,21 +399,35 @@
         <div class="edit-banner">EDIT MODE ON — click any highlighted text to change it, or use the photo button, then hit Save Changes</div>
       </div>
       <div class="card">
-        <div class="editable" contenteditable="false" data-key="project_title" style="color:var(--accent);font-size:17px;font-weight:800;margin-bottom:8px;"></div>
-        <p class="text editable block" contenteditable="false" data-key="project_objective" style="font-style:italic;"></p>
-
-        <div class="image-box" id="projectImageBox"></div>
-        <div class="image-placeholder" id="projectPlaceholder">No photo added yet</div>
-        <div class="image-controls">
-          <label class="btn small-btn" for="projUpload">📷 Add / Change Photo</label>
-          <input type="file" id="projUpload" accept="image/*" style="display:none" onchange="handleImageUpload(event,'project_image', renderProjectImage)">
-          <button class="del-btn" onclick="removeImage('project_image', renderProjectImage)" title="Remove photo">×</button>
-        </div>
-
-        <div class="math-box">
-          <div class="math-label">// ENGINEERING MATH &amp; STABILITY CALCULATIONS</div>
-          <div id="mathList"></div>
-          <button class="add-btn edit-only" style="margin:10px 0 0;" onclick="addMath()">+ Add Line</button>
+        <div class="project-grid">
+          <article class="project-item">
+            <img src="./project image 1.png" alt="Telescopic pole CAD assembly view">
+            <div class="project-copy">
+              <h3>Telescopic Pole Mechanism</h3>
+              <p>A CAD concept for a multi-stage lifting pole. The telescoping sections and lead-screw drive are arranged for controlled vertical movement and stable camera positioning.</p>
+            </div>
+          </article>
+          <article class="project-item">
+            <img src="./project image 2.png" alt="Telescopic pole CAD elevation view">
+            <div class="project-copy">
+              <h3>Adjustable Camera Support</h3>
+              <p>A second design view showing the extended pole, support legs, drive housing, and top mounting plate. The design focuses on height adjustment and a practical footprint.</p>
+            </div>
+          </article>
+          <article class="project-item">
+            <img src="./sumo bot.jpg" alt="Sumo robot prototype">
+            <div class="project-copy">
+              <h3>Autonomous Sumo Bot</h3>
+              <p>A compact competition robot built with a low front wedge, traction wheels, onboard control electronics, and a rigid protective frame for pushing opponents from the arena.</p>
+            </div>
+          </article>
+          <article class="project-item">
+            <img src="./tug of war bot.jpg" alt="Tug of War robot prototype">
+            <div class="project-copy">
+              <h3>Tug of War Bot</h3>
+              <p>A high-traction robot prototype designed for pulling force. The wide chassis, geared drive system, and balanced wheel layout help transfer motor torque to the ground.</p>
+            </div>
+          </article>
         </div>
       </div>
       <div class="save-bar"><button class="btn" onclick="saveAll()">💾 Save Changes</button></div>
@@ -503,11 +523,6 @@ const DEFAULTS = {
   project_title: "Telescopic Pole with Lead Screw Mechanism",
   project_objective: "Objective: Designed a telescopic lifting mechanism capable of raising a camera system using a lead screw while maintaining structural stability under wind loads.",
   project_image: "",
-  math_details: [
-    "1. Lead Screw Torque Required: T_raise = (F * dm / 2) * [(π * μ * dm + L) / (π * dm - μ * L)]",
-    "2. Self-Locking Condition: tan(λ) < μ  (Failsafe elevational lock without power)",
-    "3. Wind Drag & Bending Moment: F_wind = 0.5 * ρ * v² * A * Cd  ==>  σ_max = M * y / I"
-  ],
   protosem: [
     { tag: "WEEK 01", title: "Orientation & Industrial Automation Architecture", desc: "Explored PLC ladder logic, sensor mapping, and pneumatic actuator selection.", image: "" },
     { tag: "WEEK 02", title: "Surface Modelling & Aerodynamic Shell Design", desc: "Mastered Generative Shape Design (GSD) lofts, sweeps, and G0/G1/G2 continuity in CATIA.", image: "" }
@@ -534,7 +549,7 @@ function persist(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
 function bindSimpleFields(){
   document.querySelectorAll('[data-key]').forEach(el=>{
     const key = el.getAttribute('data-key');
-    if(['stats','skills','experience_bullets','math_details','protosem'].includes(key)) return;
+    if(['stats','skills','experience_bullets','protosem'].includes(key)) return;
     el.textContent = state[key] ?? "";
     el.addEventListener('input', ()=>{ state[key] = el.textContent.trim(); });
   });
@@ -665,8 +680,6 @@ function renderSimpleList(containerId, arrKey, lineClass, removeFn){
   });
 }
 function renderBullets(){ renderSimpleList('bulletsList', 'experience_bullets', 'bullet', 'removeBullet'); }
-function renderMath(){ renderSimpleList('mathList', 'math_details', 'math-line', 'removeMath'); }
-
 let activeWeek = 0;
 
 function renderProtosem(){
@@ -694,6 +707,39 @@ function renderProtosem(){
     window.location.href = 'week%20assignments/Week01.html?refresh=1';
   });
   tabsEl.appendChild(weekOneTab);
+
+  const weekTwoTab = document.createElement('button');
+  weekTwoTab.type = "button";
+  weekTwoTab.className = 'week-tab';
+  weekTwoTab.innerHTML = `
+    <span class="wt-tag">WEEK 02</span>
+    <span class="wt-title">Ideas to Applications</span>`;
+  weekTwoTab.addEventListener('click', ()=>{
+    window.location.href = 'week%20assignments/week02.html?refresh=2';
+  });
+  tabsEl.appendChild(weekTwoTab);
+
+  const weekThreeTab = document.createElement('button');
+  weekThreeTab.type = "button";
+  weekThreeTab.className = 'week-tab';
+  weekThreeTab.innerHTML = `
+    <span class="wt-tag">WEEK 03</span>
+    <span class="wt-title">Electronics &amp; Fusion 360</span>`;
+  weekThreeTab.addEventListener('click', ()=>{
+    window.location.href = 'week%20assignments/week03.html?refresh=3';
+  });
+  tabsEl.appendChild(weekThreeTab);
+
+  const weekFourTab = document.createElement('button');
+  weekFourTab.type = "button";
+  weekFourTab.className = 'week-tab';
+  weekFourTab.innerHTML = `
+    <span class="wt-tag">WEEK 04</span>
+    <span class="wt-title">Digital Fabrication</span>`;
+  weekFourTab.addEventListener('click', ()=>{
+    window.location.href = 'week%20assignments/week%2004.html?refresh=4';
+  });
+  tabsEl.appendChild(weekFourTab);
 }
 
 function renderWeekDetail(){
@@ -767,11 +813,9 @@ function renderAllDynamic(){
   renderBadge();
   renderHomeImage();
   renderExperienceImage();
-  renderProjectImage();
   renderStats();
   renderSkills();
   renderBullets();
-  renderMath();
   renderProtosem();
 }
 
@@ -780,8 +824,6 @@ function addSkill(){ state.skills.push(["New Skill", "Describe your experience a
 function removeSkill(i){ state.skills.splice(i,1); renderSkills(); }
 function addBullet(){ state.experience_bullets.push("▹ New bullet point"); renderBullets(); }
 function removeBullet(i){ state.experience_bullets.splice(i,1); renderBullets(); }
-function addMath(){ state.math_details.push("New formula line"); renderMath(); }
-function removeMath(i){ state.math_details.splice(i,1); renderMath(); }
 function addWeek(){
   const n = state.protosem.length;
   state.protosem.push({tag:"WEEK "+String(n+1).padStart(2,'0'), title:"New week title", desc:"New week description.", image:""});
