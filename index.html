@@ -418,7 +418,7 @@
       <div class="page-header">
         <div class="eyebrow">// ENGINEERING JOURNAL</div>
         <div class="title">ProtoSem Log</div>
-        <div class="edit-banner">EDIT MODE ON — click WEEK 00 to open the ProtoSem document</div>
+        <div class="edit-banner">EDIT MODE ON — click a week button to open its document</div>
       </div>
       <div class="week-tabs" id="weekTabs"></div>
       <div class="save-bar"><button class="btn" onclick="saveAll()">💾 Save Changes</button></div>
@@ -683,6 +683,17 @@ function renderProtosem(){
     window.location.href = 'week%20assignments/Week00.html?refresh=3';
   });
   tabsEl.appendChild(tab);
+
+  const weekOneTab = document.createElement('button');
+  weekOneTab.type = "button";
+  weekOneTab.className = 'week-tab';
+  weekOneTab.innerHTML = `
+    <span class="wt-tag">WEEK 01</span>
+    <span class="wt-title">5S Activity &amp; Portfolio</span>`;
+  weekOneTab.addEventListener('click', ()=>{
+    window.location.href = 'week%20assignments/Week01.html?refresh=1';
+  });
+  tabsEl.appendChild(weekOneTab);
 }
 
 function renderWeekDetail(){
