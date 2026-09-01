@@ -740,6 +740,17 @@ function renderProtosem(){
     window.location.href = 'week%20assignments/week%2004.html?refresh=4';
   });
   tabsEl.appendChild(weekFourTab);
+
+  const weekFiveTab = document.createElement('button');
+  weekFiveTab.type = "button";
+  weekFiveTab.className = 'week-tab';
+  weekFiveTab.innerHTML = `
+    <span class="wt-tag">WEEK 05</span>
+    <span class="wt-title">UI/UX Design &amp; Problem Statement</span>`;
+  weekFiveTab.addEventListener('click', ()=>{
+    window.location.href = 'week%20assignments/week5.html?refresh=5';
+  });
+  tabsEl.appendChild(weekFiveTab);
 }
 
 function renderWeekDetail(){
