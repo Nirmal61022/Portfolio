@@ -751,6 +751,17 @@ function renderProtosem(){
     window.location.href = 'week%20assignments/week5.html?refresh=5';
   });
   tabsEl.appendChild(weekFiveTab);
+
+  const weekSixTab = document.createElement('button');
+  weekSixTab.type = "button";
+  weekSixTab.className = 'week-tab';
+  weekSixTab.innerHTML = `
+    <span class="wt-tag">WEEK 06</span>
+    <span class="wt-title">Figma, Embedded Systems &amp; Soldering</span>`;
+  weekSixTab.addEventListener('click', ()=>{
+    window.location.href = 'week%20assignments/week06.html?refresh=6';
+  });
+  tabsEl.appendChild(weekSixTab);
 }
 
 function renderWeekDetail(){
