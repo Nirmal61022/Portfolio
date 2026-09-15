@@ -540,9 +540,9 @@ function loadState(){
     const raw = localStorage.getItem(STORAGE_KEY);
     if(raw){
       const saved = Object.assign(JSON.parse(JSON.stringify(DEFAULTS)), JSON.parse(raw));
-      if(!saved.profile_image_migrated){
+      if(saved.profile_image_migration_version !== 2){
         saved.profile_image = DEFAULTS.profile_image;
-        saved.profile_image_migrated = true;
+        saved.profile_image_migration_version = 2;
         localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
       }
       if(saved.experience_title === "CAD Design Intern — CADD Centre"){
