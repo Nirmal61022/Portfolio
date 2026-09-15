@@ -29,7 +29,7 @@
     li { margin:8px 0; }
     .gallery { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; margin:22px 0 8px; }
     figure { margin:0; }
-    .photo-placeholder { display:grid; place-items:center; width:100%; aspect-ratio:4/3; border:1px dashed #465071; border-radius:12px; color:#8991aa; text-align:center; padding:18px; }
+    figure img { display:block; width:100%; aspect-ratio:4/3; border-radius:12px; object-fit:cover; border:1px solid var(--line); box-shadow:0 8px 20px rgba(0,0,0,.35),0 0 16px rgba(0,229,255,.08); }
     figcaption { margin-top:10px; color:var(--muted); font-size:14px; line-height:1.45; }
     .reflection { margin-top:38px; padding:24px 26px; border-left:4px solid var(--blue); background:#121322; }
     @media (max-width:900px) {
@@ -66,15 +66,15 @@
     <h2>Week 6 in pictures</h2>
     <div class="gallery">
       <figure>
-        <div class="photo-placeholder">No Week 06 photo added yet</div>
+        <img src="./week6.1.jpg" alt="Week 6 Figma and UI/UX development activity">
         <figcaption>Figma and UI/UX development session focused on wireframes, layouts, and usability.</figcaption>
       </figure>
       <figure>
-        <div class="photo-placeholder">No Week 06 photo added yet</div>
+        <img src="./week6.2.jpg" alt="Week 6 embedded systems activity">
         <figcaption>Embedded systems activity exploring computational hardware and system components.</figcaption>
       </figure>
       <figure>
-        <div class="photo-placeholder">No Week 06 photo added yet</div>
+        <img src="./week6.3.jpg" alt="Week 6 soldering practice">
         <figcaption>Soldering practice focused on reliable electrical connections and component assembly.</figcaption>
       </figure>
     </div>
