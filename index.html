@@ -408,10 +408,10 @@
             </div>
           </article>
           <article class="project-item">
-            <img src="./project image 2.png" alt="Telescopic pole CAD elevation view">
+            <img src="./week assignments/h bridge.jpg" alt="Dual H-Bridge motor driver circuit">
             <div class="project-copy">
-              <h3>Adjustable Camera Support</h3>
-              <p>A second design view showing the extended pole, support legs, drive housing, and top mounting plate. The design focuses on height adjustment and a practical footprint.</p>
+              <h3>Dual H-Bridge Motor Driver</h3>
+              <p>Designed a <strong>Dual H-Bridge Motor Driver</strong> for bidirectional control of two DC motors. Gained practical experience in <strong>circuit design, simulation, and hardware implementation</strong>. Strengthened my skills in <strong>embedded systems, motor control, and robotics</strong>.</p>
             </div>
           </article>
           <article class="project-item">
@@ -491,7 +491,7 @@
 <script>
 /* ============ DEFAULT DATA ============ */
 const DEFAULTS = {
-  profile_image: "",
+  profile_image: "./week%20assignments/%2354%20Nirmal%20Kumar%20P%20M.jpg",
   home_image: "",
   tagline: "MECHATRONICS ENGINEER  |  CAD DESIGNER  |  ROBOTICS",
   bio: "Transforming complex mechanical concepts into high-precision, manufacture-ready CAD models. Specializing in 3DEXPERIENCE CATIA, SolidWorks, surface modeling, and sheet metal design for next-generation automotive & robotic systems.",
@@ -511,15 +511,14 @@ const DEFAULTS = {
     ["2D CAD Drafting & Detailing", "Producing clear, production-ready 2D drawings and detailed part documentation from 3D models."],
     ["GD&T Basics (ASME Y14.5)", "Applying geometric dimensioning and tolerancing callouts to communicate fit, form, and function on drawings."]
   ],
-  experience_title: "CAD Design Intern — CADD Centre",
-  experience_tag: "[CERTIFIED INDUSTRIAL CAD INTERNSHIP]",
+  experience_title: "TANCAM Internship - CATIA & 3DEXPERIENCE",
+  experience_tag: "[TANCAM INDUSTRIAL INTERNSHIP]",
   experience_bullets: [
-    "▹ Mechanical Component Design: Machine parts, gearboxes, housing enclosures, and multi-part sub-assemblies.",
-    "▹ Sheet Metal Design: Punch/die clearance, bend allowances, and flat pattern DXF outputs.",
-    "▹ Advanced Surface Modelling: Developed Class-A style curved surfaces using CATIA Generative Shape Design (GSD).",
-    "▹ Drafting & GD&T: 2D production drawings with ASME Y14.5 tolerance callouts and Bill of Materials (BOM)."
+    "Completed a <strong>TANCAM internship</strong> focused on CATIA and 3DEXPERIENCE-based mechanical design.",
+    "Gained hands-on experience in <strong>Part Design, Assembly, Surface Modelling, and Sheet Metal Design</strong>.",
+    "Strengthened my skills in <strong>CAD modelling, product design, and engineering simulation</strong>."
   ],
-  experience_image: "",
+  experience_image: "./week assignments/catia.jpg",
   project_title: "Telescopic Pole with Lead Screw Mechanism",
   project_objective: "Objective: Designed a telescopic lifting mechanism capable of raising a camera system using a lead screw while maintaining structural stability under wind loads.",
   project_image: "",
@@ -539,7 +538,25 @@ let editMode = false;
 function loadState(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
-    if(raw) return Object.assign(JSON.parse(JSON.stringify(DEFAULTS)), JSON.parse(raw));
+    if(raw){
+      const saved = Object.assign(JSON.parse(JSON.stringify(DEFAULTS)), JSON.parse(raw));
+      if(!saved.profile_image_migrated){
+        saved.profile_image = DEFAULTS.profile_image;
+        saved.profile_image_migrated = true;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+      }
+      if(saved.experience_title === "CAD Design Intern — CADD Centre"){
+        saved.experience_title = "TANCAM Internship - CATIA & 3DEXPERIENCE";
+        saved.experience_tag = "[TANCAM INDUSTRIAL INTERNSHIP]";
+        saved.experience_bullets = [
+          "Completed a <strong>TANCAM internship</strong> focused on CATIA and 3DEXPERIENCE-based mechanical design.",
+          "Gained hands-on experience in <strong>Part Design, Assembly, Surface Modelling, and Sheet Metal Design</strong>.",
+          "Strengthened my skills in <strong>CAD modelling, product design, and engineering simulation</strong>."
+        ];
+        saved.experience_image = "./week assignments/catia.jpg";
+      }
+      return saved;
+    }
   }catch(e){}
   return JSON.parse(JSON.stringify(DEFAULTS));
 }
@@ -762,6 +779,17 @@ function renderProtosem(){
     window.location.href = 'week%20assignments/week06.html?refresh=6';
   });
   tabsEl.appendChild(weekSixTab);
+
+  const weekSevenTab = document.createElement('button');
+  weekSevenTab.type = "button";
+  weekSevenTab.className = 'week-tab';
+  weekSevenTab.innerHTML = `
+    <span class="wt-tag">WEEK 07</span>
+    <span class="wt-title">IoT, Connectivity &amp; RTOS</span>`;
+  weekSevenTab.addEventListener('click', ()=>{
+    window.location.href = 'week%20assignments/week07.html?refresh=7';
+  });
+  tabsEl.appendChild(weekSevenTab);
 }
 
 function renderWeekDetail(){
