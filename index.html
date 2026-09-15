@@ -491,7 +491,7 @@
 <script>
 /* ============ DEFAULT DATA ============ */
 const DEFAULTS = {
-  profile_image: "./week%20assignments/%2354%20Nirmal%20Kumar%20P%20M.jpg",
+  profile_image: "./week%20assignments/profile.jpg",
   home_image: "",
   tagline: "MECHATRONICS ENGINEER  |  CAD DESIGNER  |  ROBOTICS",
   bio: "Transforming complex mechanical concepts into high-precision, manufacture-ready CAD models. Specializing in 3DEXPERIENCE CATIA, SolidWorks, surface modeling, and sheet metal design for next-generation automotive & robotic systems.",
@@ -540,9 +540,9 @@ function loadState(){
     const raw = localStorage.getItem(STORAGE_KEY);
     if(raw){
       const saved = Object.assign(JSON.parse(JSON.stringify(DEFAULTS)), JSON.parse(raw));
-      if(saved.profile_image_migration_version !== 2){
+      if(saved.profile_image_migration_version !== 3){
         saved.profile_image = DEFAULTS.profile_image;
-        saved.profile_image_migration_version = 2;
+        saved.profile_image_migration_version = 3;
         localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
       }
       if(saved.experience_title === "CAD Design Intern — CADD Centre"){
