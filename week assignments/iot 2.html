@@ -3,6 +3,8 @@
   * { box-sizing:border-box; }
   body.doc-content { margin:0; padding:28px 0; background:radial-gradient(circle at 82% 8%,rgba(119,43,255,.16),transparent 30%),linear-gradient(135deg,#07080d 0%,#0b0b14 52%,#090d18 100%); color:var(--ink); font-family:Arial,sans-serif; }
   body.doc-content { width:100% !important; max-width:none !important; padding:28px 0 !important; }
+  body.doc-content { display:block !important; width:100vw !important; margin:0 !important; }
+  body.doc-content > * { width:calc(100% - 56px) !important; max-width:1040px !important; margin-left:auto !important; margin-right:auto !important; }
   body.doc-content > * { max-width:1040px; margin-left:auto; margin-right:auto; }
   body.doc-content > h1, body.doc-content > h2, body.doc-content > h3, body.doc-content > p, body.doc-content > ul, body.doc-content > ol, body.doc-content > table, body.doc-content > hr { width:calc(100% - 56px); }
   body.doc-content > h1:first-child { padding-top:54px; }
