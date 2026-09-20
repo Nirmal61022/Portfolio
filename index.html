@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+i<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -201,6 +201,14 @@
     100%{opacity:1;transform:translateX(0);}
   }
   .week-detail-empty{margin:0 40px 22px;color:var(--subtext);font-size:13.5px;}
+
+  .proto-tabs{display:flex;gap:10px;margin:0 40px 20px;border-bottom:1px solid var(--border);}
+  .proto-tab{background:transparent;border:none;border-bottom:2px solid transparent;color:var(--subtext);padding:10px 4px 12px;font:700 13px inherit;cursor:pointer;transition:color .2s ease,border-color .2s ease;}
+  .proto-tab:hover{color:var(--accent2);}
+  .proto-tab.active{color:var(--accent-glow);border-bottom-color:var(--accent);}
+  .proto-panel{display:none;}
+  .proto-panel.active{display:block;}
+  .iot-session-empty{margin:0 40px 22px;min-height:150px;border:1px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--subtext);font-size:13.5px;}
 
   .contact-row{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 0;flex-wrap:nowrap;border-bottom:1px solid var(--border);}
   .contact-row:last-child{border-bottom:none;}
@@ -440,7 +448,21 @@
         <div class="title">ProtoSem Log</div>
         <div class="edit-banner">EDIT MODE ON — click a week button to open its document</div>
       </div>
-      <div class="week-tabs" id="weekTabs"></div>
+      <div class="proto-tabs" role="tablist" aria-label="ProtoSem sections">
+        <button class="proto-tab active" id="weeklyProgressTab" type="button" role="tab" aria-selected="true" aria-controls="weeklyProgressPanel">Weekly Progress</button>
+        <button class="proto-tab" id="iotSessionTab" type="button" role="tab" aria-selected="false" aria-controls="iotSessionPanel">IOT Session</button>
+      </div>
+      <div class="proto-panel active" id="weeklyProgressPanel" role="tabpanel" aria-labelledby="weeklyProgressTab">
+        <div class="week-tabs" id="weekTabs"></div>
+      </div>
+      <div class="proto-panel" id="iotSessionPanel" role="tabpanel" aria-labelledby="iotSessionTab">
+        <div class="week-tabs" id="iotSessionTasks">
+          <button class="week-tab" type="button" onclick="window.location.href='week%20assignments/iot1.html?refresh=1'">
+            <span class="wt-tag">TASK 01</span>
+            <span class="wt-title">Task-1</span>
+          </button>
+        </div>
+      </div>
       <div class="save-bar"><button class="btn" onclick="saveAll()">💾 Save Changes</button></div>
     </section>
 
@@ -791,6 +813,19 @@ function renderProtosem(){
   });
   tabsEl.appendChild(weekSevenTab);
 }
+
+function setProtoTab(tabName){
+  const isWeekly = tabName === 'weekly';
+  document.getElementById('weeklyProgressTab').classList.toggle('active', isWeekly);
+  document.getElementById('weeklyProgressTab').setAttribute('aria-selected', isWeekly);
+  document.getElementById('weeklyProgressPanel').classList.toggle('active', isWeekly);
+  document.getElementById('iotSessionTab').classList.toggle('active', !isWeekly);
+  document.getElementById('iotSessionTab').setAttribute('aria-selected', !isWeekly);
+  document.getElementById('iotSessionPanel').classList.toggle('active', !isWeekly);
+}
+
+document.getElementById('weeklyProgressTab').addEventListener('click', ()=>setProtoTab('weekly'));
+document.getElementById('iotSessionTab').addEventListener('click', ()=>setProtoTab('iot'));
 
 function renderWeekDetail(){
   const i = activeWeek;
