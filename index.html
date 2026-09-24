@@ -86,15 +86,22 @@ i<!DOCTYPE html>
   .content{position:absolute;top:0;left:0;right:0;bottom:0;overflow-y:auto;padding:0 0 60px;z-index:2;}
   .section{display:none;}
   .section.active{display:block;}
-  .section.active.slide-right{animation:slideInRight .5s cubic-bezier(.16,1,.3,1);}
-  .section.active.slide-left{animation:slideInLeft .5s cubic-bezier(.16,1,.3,1);}
-  @keyframes slideInRight{
-    0%{opacity:0;transform:translateX(60px);}
-    100%{opacity:1;transform:translateX(0);}
+  .section.active > *{animation:contentReveal .6s cubic-bezier(.16,1,.3,1) both;}
+  .section.active > *:nth-child(1){animation-delay:.04s;}
+  .section.active > *:nth-child(2){animation-delay:.1s;}
+  .section.active > *:nth-child(3){animation-delay:.16s;}
+  .section.active > *:nth-child(4){animation-delay:.22s;}
+  .section.active > *:nth-child(5){animation-delay:.28s;}
+  .section.active > *:nth-child(6){animation-delay:.34s;}
+  .section.active.slide-right > *{--reveal-x:28px;}
+  .section.active.slide-left > *{--reveal-x:-28px;}
+  @keyframes contentReveal{
+    0%{opacity:0;transform:translate3d(var(--reveal-x, 0),18px,0) scale(.985);filter:blur(5px);}
+    65%{opacity:1;filter:blur(0);}
+    100%{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0);}
   }
-  @keyframes slideInLeft{
-    0%{opacity:0;transform:translateX(-60px);}
-    100%{opacity:1;transform:translateX(0);}
+  @media (prefers-reduced-motion:reduce){
+    .section.active > *{animation:none;}
   }
   .page-header{padding:35px 40px 15px;}
   .eyebrow{
@@ -457,15 +464,15 @@ i<!DOCTYPE html>
       </div>
       <div class="proto-panel" id="iotSessionPanel" role="tabpanel" aria-labelledby="iotSessionTab">
         <div class="week-tabs" id="iotSessionTasks">
-          <button class="week-tab" type="button" onclick="window.location.href='week%20assignments/iot1.html?refresh=1'">
+          <button class="week-tab" type="button" onclick="openAssignment('week%20assignments/iot1.html?refresh=1')">
             <span class="wt-tag">TASK 01</span>
             <span class="wt-title">Task-1</span>
           </button>
-          <button class="week-tab" type="button" onclick="window.location.href='week%20assignments/iot%202.html?refresh=1'">
+          <button class="week-tab" type="button" onclick="openAssignment('week%20assignments/iot%202.html?refresh=1')">
             <span class="wt-tag">TASK 02</span>
             <span class="wt-title">Task-2</span>
           </button>
-          <button class="week-tab" type="button" onclick="window.location.href='week%20assignments/iot%203.html?refresh=1'">
+          <button class="week-tab" type="button" onclick="openAssignment('week%20assignments/iot%203.html?refresh=1')">
             <span class="wt-tag">TASK 03</span>
             <span class="wt-title">Task-3</span>
           </button>
@@ -729,6 +736,10 @@ function renderSimpleList(containerId, arrKey, lineClass, removeFn){
 function renderBullets(){ renderSimpleList('bulletsList', 'experience_bullets', 'bullet', 'removeBullet'); }
 let activeWeek = 0;
 
+function openAssignment(path){
+  window.open(path, '_blank');
+}
+
 function renderProtosem(){
   const tabsEl = document.getElementById('weekTabs');
   tabsEl.innerHTML = "";
@@ -740,7 +751,7 @@ function renderProtosem(){
     <span class="wt-tag">WEEK 00</span>
     <span class="wt-title">ProtoSem Document</span>`;
   tab.addEventListener('click', ()=>{
-    window.location.href = 'week%20assignments/Week00.html?refresh=3';
+    openAssignment('week%20assignments/Week00.html?refresh=3');
   });
   tabsEl.appendChild(tab);
 
@@ -751,7 +762,7 @@ function renderProtosem(){
     <span class="wt-tag">WEEK 01</span>
     <span class="wt-title">5S Activity &amp; Portfolio</span>`;
   weekOneTab.addEventListener('click', ()=>{
-    window.location.href = 'week%20assignments/Week01.html?refresh=1';
+    openAssignment('week%20assignments/Week01.html?refresh=1');
   });
   tabsEl.appendChild(weekOneTab);
 
@@ -762,7 +773,7 @@ function renderProtosem(){
     <span class="wt-tag">WEEK 02</span>
     <span class="wt-title">Ideas to Applications</span>`;
   weekTwoTab.addEventListener('click', ()=>{
-    window.location.href = 'week%20assignments/week02.html?refresh=2';
+    openAssignment('week%20assignments/week02.html?refresh=2');
   });
   tabsEl.appendChild(weekTwoTab);
 
@@ -773,7 +784,7 @@ function renderProtosem(){
     <span class="wt-tag">WEEK 03</span>
     <span class="wt-title">Electronics &amp; Fusion 360</span>`;
   weekThreeTab.addEventListener('click', ()=>{
-    window.location.href = 'week%20assignments/week03.html?refresh=3';
+    openAssignment('week%20assignments/week03.html?refresh=3');
   });
   tabsEl.appendChild(weekThreeTab);
 
@@ -784,7 +795,7 @@ function renderProtosem(){
     <span class="wt-tag">WEEK 04</span>
     <span class="wt-title">Digital Fabrication</span>`;
   weekFourTab.addEventListener('click', ()=>{
-    window.location.href = 'week%20assignments/week%2004.html?refresh=4';
+    openAssignment('week%20assignments/week%2004.html?refresh=4');
   });
   tabsEl.appendChild(weekFourTab);
 
@@ -795,7 +806,7 @@ function renderProtosem(){
     <span class="wt-tag">WEEK 05</span>
     <span class="wt-title">UI/UX Design &amp; Problem Statement</span>`;
   weekFiveTab.addEventListener('click', ()=>{
-    window.location.href = 'week%20assignments/week5.html?refresh=5';
+    openAssignment('week%20assignments/week5.html?refresh=5');
   });
   tabsEl.appendChild(weekFiveTab);
 
@@ -806,7 +817,7 @@ function renderProtosem(){
     <span class="wt-tag">WEEK 06</span>
     <span class="wt-title">Figma, Embedded Systems &amp; Soldering</span>`;
   weekSixTab.addEventListener('click', ()=>{
-    window.location.href = 'week%20assignments/week06.html?refresh=6';
+    openAssignment('week%20assignments/week06.html?refresh=6');
   });
   tabsEl.appendChild(weekSixTab);
 
@@ -817,7 +828,7 @@ function renderProtosem(){
     <span class="wt-tag">WEEK 07</span>
     <span class="wt-title">IoT, Connectivity &amp; RTOS</span>`;
   weekSevenTab.addEventListener('click', ()=>{
-    window.location.href = 'week%20assignments/week07.html?refresh=7';
+    openAssignment('week%20assignments/week07.html?refresh=7');
   });
   tabsEl.appendChild(weekSevenTab);
 }
