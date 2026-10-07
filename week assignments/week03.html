@@ -1,63 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Week 03 - Electronics and Fusion 360</title>
-  <style>
-    :root { --ink:#f4f6ff; --muted:#c5c9d8; --blue:#00e5ff; --pale-blue:#15162a; --line:#2b2b48; --paper:#0d0e18; }
-    * { box-sizing: border-box; }
-    body { margin:0; background:radial-gradient(circle at 82% 8%,rgba(119,43,255,.16),transparent 30%),linear-gradient(135deg,#07080d 0%,#0b0b14 52%,#090d18 100%); color:var(--ink); font-family:Arial,sans-serif; }
-    main { width:auto; max-width:1040px; margin:28px auto; padding:clamp(28px,5vw,64px); background:rgba(13,14,24,.96); border:1px solid var(--line); box-shadow:0 14px 40px rgba(0,0,0,.45),0 0 30px rgba(0,229,255,.06); }
-    .kicker { margin:0 0 12px; color:var(--blue); font-size:13px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; }
-    h1 { max-width:760px; margin:0; color:#fff; font-size:clamp(30px,4vw,48px); line-height:1.08; }
-    .lead { max-width:790px; margin:22px 0 34px; color:var(--muted); font-size:17px; line-height:1.75; }
-    hr { border:0; border-top:1px solid var(--line); margin:34px 0; }
-    .overview { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr); gap:20px; margin-bottom:38px; }
-    .panel { border:1px solid var(--line); border-radius:16px; padding:24px 26px; }
-    .takeaway { background:var(--pale-blue); border-color:#263052; }
-    h2 { margin:0 0 16px; color:var(--blue); font-size:21px; }
-    h3 { margin:36px 0 8px; color:#8b7dff; font-size:21px; }
-    p, li { color:var(--muted); font-size:16px; line-height:1.7; }
-    p { margin:0 0 18px; }
-    ul { margin:0; padding-left:22px; }
-    li { margin:8px 0; }
-    .gallery { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; margin:22px 0 8px; }
-    figure { margin:0; }
-    figure img { display:block; width:100%; aspect-ratio:4/3; border-radius:12px; object-fit:cover; box-shadow:0 8px 20px rgba(44,69,94,.12); }
-    figcaption { margin-top:10px; color:var(--muted); font-size:14px; line-height:1.45; }
-    .reflection { margin-top:38px; padding:24px 26px; border-left:4px solid var(--blue); background:#121322; }
-    @media (max-width:900px) { main { width:auto; margin:10px; padding:26px 20px 38px; } .overview,.gallery { grid-template-columns:1fr; } p,li { font-size:15px; } }
-  </style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Week 03 - Electronics and Fusion 360</title>
+	<style>
+		:root {
+			--ink: #203047;
+			--muted: #5d6b7d;
+			--blue: #2675c9;
+			--pale-blue: #eef7ff;
+			--line: #dce5ed;
+			--paper: #ffffff;
+		}
+		* { box-sizing: border-box; }
+		body {
+			margin: 0;
+			background: linear-gradient(135deg, #eef5fc 0%, #f9fbfd 52%, #edf6f7 100%);
+			color: var(--ink);
+			font-family: Arial, sans-serif;
+		}
+		main {
+			width: auto;
+			max-width: 1040px;
+			margin: 28px auto;
+			padding: clamp(28px, 5vw, 64px);
+			background: var(--paper);
+			box-shadow: 0 14px 40px rgba(46, 73, 101, .10);
+		}
+		.kicker {
+			margin: 0 0 12px;
+			color: var(--blue);
+			font-size: 13px;
+			font-weight: 700;
+			letter-spacing: 1.5px;
+			text-transform: uppercase;
+		}
+		h1 {
+			max-width: 760px;
+			margin: 0;
+			color: #1b3554;
+			font-size: clamp(30px, 4vw, 48px);
+			line-height: 1.08;
+		}
+		.lead {
+			max-width: 790px;
+			margin: 22px 0 34px;
+			color: var(--muted);
+			font-size: 17px;
+			line-height: 1.75;
+		}
+		hr { border: 0; border-top: 1px solid var(--line); margin: 34px 0; }
+		.overview {
+			display: grid;
+			grid-template-columns: minmax(0, 1.35fr) minmax(0, .65fr);
+			gap: 20px;
+			margin-bottom: 38px;
+		}
+		.panel {
+			border: 1px solid var(--line);
+			border-radius: 16px;
+			padding: 24px 26px;
+		}
+		.takeaway { background: var(--pale-blue); border-color: #d7eafa; }
+		h2 {
+			margin: 0 0 16px;
+			color: var(--blue);
+			font-size: 21px;
+		}
+		h3 {
+			margin: 36px 0 8px;
+			color: #23486e;
+			font-size: 21px;
+		}
+		p, li { color: var(--muted); font-size: 16px; line-height: 1.7; }
+		p { margin: 0 0 18px; }
+		ul { margin: 0; padding-left: 22px; }
+		li { margin: 8px 0; }
+		.gallery {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 22px;
+			margin: 22px 0 8px;
+		}
+		figure { margin: 0; }
+		figure img {
+			display: block;
+			width: 100%;
+			aspect-ratio: 4 / 3;
+			border-radius: 12px;
+			object-fit: cover;
+			box-shadow: 0 8px 20px rgba(44, 69, 94, .12);
+		}
+		figcaption { margin-top: 10px; color: var(--muted); font-size: 14px; line-height: 1.45; }
+		.reflection {
+			margin-top: 38px;
+			padding: 24px 26px;
+			border-left: 4px solid var(--blue);
+			background: #f7fafc;
+		}
+		@media (max-width: 900px) {
+			main { width: auto; margin: 10px; padding: 26px 20px 38px; }
+			.overview, .gallery { grid-template-columns: 1fr; }
+			p, li { font-size: 15px; }
+		}
+	</style>
 </head>
 <body>
-  <main>
-    <p class="kicker">ProtoSem Journal - Week 03</p>
-    <h1>Electronics Fundamentals Review and Fusion 360 Practical Assignments</h1>
-    <p class="lead">This week focused on revisiting the fundamentals of electronics and digital systems while gaining practical experience with Fusion 360. The combination of theoretical learning and hands-on activities helped me understand how basic electrical concepts can connect with mechanical design, simulation, and practical engineering problem-solving.</p>
-    <section class="overview" aria-label="Week 3 overview">
-      <div class="panel"><h2>What I learned</h2><ul>
-        <li>Revised key electronics concepts such as <strong>voltage, current, resistance, and circuit behavior</strong>.</li>
-        <li>Understood how different electronic components work together to form practical systems and real-world devices.</li>
-        <li>Completed <strong>Fusion 360</strong> assignments to improve modeling accuracy, design skills, and technical confidence.</li>
-        <li>Connected <strong>design thinking with engineering fundamentals</strong> by applying theory to organized practical tasks.</li>
-      </ul></div>
-      <div class="panel takeaway"><h2>Big takeaway</h2><p>A strong engineering foundation begins with a clear understanding of the basics. When theory, practical tools, and hands-on experience are combined, even simple projects can provide valuable technical learning.</p></div>
-    </section>
-    <h2>Week 3 in pictures</h2>
-    <div class="gallery">
-      <figure><img src="./week3.1.jpg" alt="Week 3 electronics workshop session"><figcaption>Practical learning session focused on electronics fundamentals.</figcaption></figure>
-      <figure><img src="./week3.2.jpg" alt="Fusion 360 practical design assignment"><figcaption>Hands-on Fusion 360 modeling and design assignment.</figcaption></figure>
-      <figure><img src="./week3.3.jpg" alt="Week 3 engineering learning reflection"><figcaption>Connecting theoretical knowledge with practical engineering work.</figcaption></figure>
-      <figure><img src="./week 3.4.jpeg" alt="Week 3 practical engineering activity"><figcaption>Additional practical engineering work from the Week 3 session.</figcaption></figure>
-    </div>
-    <hr>
-    <h2>Learning reflection</h2>
-    <h3>Core electronics learning</h3>
-    <p>The week started with a revision of important electronics concepts. This helped us refresh our understanding of how circuits are designed and how current moves through different components. These basics are essential because they provide the foundation for many engineering applications, including microcontrollers, automation, machine design, and other electronic systems.</p>
-    <h3>Fusion 360 practical work</h3>
-    <p>As the week continued, we worked on practical assignments using <strong>Fusion 360</strong>. These activities allowed us to apply organized and logical thinking to engineering design. It was helpful to understand how technical knowledge and digital design tools complement each other when developing accurate and realistic engineering models.</p>
-    <div class="reflection"><p><strong>Final reflection:</strong> Week 3 helped me recognize the importance of combining theoretical understanding with practical execution. It reinforced that successful engineering requires clear concepts, careful analysis, attention to detail, and consistent practice. This week provided a strong foundation for more advanced design and engineering projects.</p></div>
-  </main><script src="../return-to-parent.js"></script>
+	<main>
+		<p class="kicker">ProtoSem Journal - Week 03</p>
+		<h1>Electronics Fundamentals Review and Fusion 360 Practical Assignments</h1>
+		<p class="lead">This week focused on revisiting the fundamentals of electronics and digital systems while gaining practical experience with Fusion 360. The combination of theoretical learning and hands-on activities helped me understand how basic electrical concepts can connect with mechanical design, simulation, and practical engineering problem-solving.</p>
+
+		<section class="overview" aria-label="Week 3 overview">
+			<div class="panel">
+				<h2>What I learned</h2>
+				<ul>
+					<li>Revised key electronics concepts such as <strong>voltage, current, resistance, and circuit behavior</strong>.</li>
+					<li>Understood how different electronic components work together to form practical systems and real-world devices.</li>
+					<li>Completed <strong>Fusion 360</strong> assignments to improve modeling accuracy, design skills, and technical confidence.</li>
+					<li>Connected <strong>design thinking with engineering fundamentals</strong> by applying theory to organized practical tasks.</li>
+				</ul>
+			</div>
+			<div class="panel takeaway">
+				<h2>Big takeaway</h2>
+				<p>A strong engineering foundation begins with a clear understanding of the basics. When theory, practical tools, and hands-on experience are combined, even simple projects can provide valuable technical learning.</p>
+			</div>
+		</section>
+
+		<h2>Week 3 in pictures</h2>
+		<div class="gallery">
+			<figure>
+				<img src="./week3.1.jpg" alt="Week 3 electronics workshop session">
+				<figcaption>Practical learning session focused on electronics fundamentals.</figcaption>
+			</figure>
+			<figure>
+				<img src="./week3.2.jpg" alt="Fusion 360 practical design assignment">
+				<figcaption>Hands-on Fusion 360 modeling and design assignment.</figcaption>
+			</figure>
+			<figure>
+				<img src="./week3.3.jpg" alt="Week 3 engineering learning reflection">
+				<figcaption>Connecting theoretical knowledge with practical engineering work.</figcaption>
+			</figure>
+		</div>
+
+		<hr>
+		<h2>Learning reflection</h2>
+		<h3>Core electronics learning</h3>
+		<p>The week started with a revision of important electronics concepts. This helped us refresh our understanding of how circuits are designed and how current moves through different components. These basics are essential because they provide the foundation for many engineering applications, including microcontrollers, automation, machine design, and other electronic systems.</p>
+
+		<h3>Fusion 360 practical work</h3>
+		<p>As the week continued, we worked on practical assignments using <strong>Fusion 360</strong>. These activities allowed us to apply organized and logical thinking to engineering design. It was helpful to understand how technical knowledge and digital design tools complement each other when developing accurate and realistic engineering models.</p>
+
+		<div class="reflection">
+			<p><strong>Final reflection:</strong> Week 3 helped me recognize the importance of combining theoretical understanding with practical execution. It reinforced that successful engineering requires clear concepts, careful analysis, attention to detail, and consistent practice. This week provided a strong foundation for more advanced design and engineering projects.</p>
+		</div>
+	</main>
 </body>
 </html>
+<html><head><meta content="text/html; charset=UTF-8" http-equiv="content-type"><style type="text/css">.lst-kix_ruxw3fw8n9v2-0>li:before{content:"\0025cf   "}.lst-kix_ruxw3fw8n9v2-3>li:before{content:"\0025cf   "}ul.lst-kix_ruxw3fw8n9v2-3{list-style-type:none}ul.lst-kix_ruxw3fw8n9v2-2{list-style-type:none}ul.lst-kix_ruxw3fw8n9v2-1{list-style-type:none}.lst-kix_ruxw3fw8n9v2-4>li:before{content:"\0025cb   "}ul.lst-kix_ruxw3fw8n9v2-0{list-style-type:none}.lst-kix_ruxw3fw8n9v2-5>li:before{content:"\0025a0   "}li.li-bullet-0:before{margin-left:-18pt;white-space:nowrap;display:inline-block;min-width:18pt}.lst-kix_ruxw3fw8n9v2-7>li:before{content:"\0025cb   "}.lst-kix_ruxw3fw8n9v2-6>li:before{content:"\0025cf   "}.lst-kix_ruxw3fw8n9v2-8>li:before{content:"\0025a0   "}ul.lst-kix_ruxw3fw8n9v2-8{list-style-type:none}ul.lst-kix_ruxw3fw8n9v2-7{list-style-type:none}ul.lst-kix_ruxw3fw8n9v2-6{list-style-type:none}ul.lst-kix_ruxw3fw8n9v2-5{list-style-type:none}ul.lst-kix_ruxw3fw8n9v2-4{list-style-type:none}.lst-kix_ruxw3fw8n9v2-2>li:before{content:"\0025a0   "}.lst-kix_ruxw3fw8n9v2-1>li:before{content:"\0025cb   "}ol{margin:0;padding:0}table td,table th{padding:0}.c5{padding-top:0pt;padding-bottom:0pt;line-height:1.15;orphans:2;widows:2;text-align:left;height:11pt}.c4{color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:11pt;font-family:"Arial";font-style:normal}.c1{color:#000000;font-weight:700;text-decoration:none;vertical-align:baseline;font-size:11pt;font-family:"Arial";font-style:normal}.c6{padding-top:18pt;padding-bottom:4pt;line-height:1.15;orphans:2;widows:2;text-align:left}.c2{padding-top:14pt;padding-bottom:4pt;line-height:1.15;orphans:2;widows:2;text-align:left}.c9{color:#000000;text-decoration:none;vertical-align:baseline;font-size:13pt;font-family:"Arial";font-style:normal}.c8{color:#000000;text-decoration:none;vertical-align:baseline;font-size:17pt;font-family:"Arial";font-style:normal}.c0{padding-top:12pt;padding-bottom:12pt;line-height:1.15;orphans:2;widows:2;text-align:left}.c7{background-color:#ffffff;max-width:468pt;padding:72pt 72pt 72pt 72pt}.c11{padding:0;margin:0}.c10{margin-left:36pt;padding-left:0pt}.c3{font-weight:700}.title{padding-top:0pt;color:#000000;font-size:26pt;padding-bottom:3pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}.subtitle{padding-top:0pt;color:#666666;font-size:15pt;padding-bottom:16pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}li{color:#000000;font-size:11pt;font-family:"Arial"}p{margin:0;color:#000000;font-size:11pt;font-family:"Arial"}h1{padding-top:20pt;color:#000000;font-size:20pt;padding-bottom:6pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h2{padding-top:18pt;color:#000000;font-size:16pt;padding-bottom:6pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h3{padding-top:16pt;color:#434343;font-size:14pt;padding-bottom:4pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h4{padding-top:14pt;color:#666666;font-size:12pt;padding-bottom:4pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h5{padding-top:12pt;color:#666666;font-size:11pt;padding-bottom:4pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h6{padding-top:12pt;color:#666666;font-size:11pt;padding-bottom:4pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;font-style:italic;orphans:2;widows:2;text-align:left}</style></head><body class="c7 doc-content"><h2 class="c6" id="h.1wtq3pqorpzn"><span class="c3 c8">Electronics Fundamentals Review &amp; Fusion 360 Practical Assignments</span></h2><p class="c0"><span>This week focused on revisiting the fundamentals of electronics and digital systems while gaining practical experience with </span><span class="c3">Fusion 360</span><span class="c4">. The combination of theoretical learning and hands-on activities helped me understand how basic electrical concepts can be connected with mechanical design, simulation, and practical engineering problem-solving.</span></p><ul class="c11 lst-kix_ruxw3fw8n9v2-0 start"><li class="c0 c10 li-bullet-0"><span>Revised key electronics concepts such as </span><span class="c3">voltage, current, resistance, and circuit behavior</span><span class="c4">.</span></li><li class="c0 c10 li-bullet-0"><span class="c4">Understood how different electronic components work together to form practical systems and real-world devices.</span></li><li class="c0 c10 li-bullet-0"><span>Completed </span><span class="c3">Fusion 360</span><span class="c4">&nbsp;assignments to improve my modeling accuracy, design skills, and technical confidence.</span></li><li class="c0 c10 li-bullet-0"><span>Connected </span><span class="c3">design thinking with engineering fundamentals</span><span class="c4">&nbsp;by applying theoretical knowledge to organized and practical tasks.</span></li></ul><h3 class="c2" id="h.obv614r4r9js"><span class="c9 c3">Big Takeaway</span></h3><p class="c0"><span class="c1">A strong engineering foundation begins with a clear understanding of the basics. When theory, practical tools, and hands-on experience are combined, even simple projects can provide valuable technical learning.</span></p><h3 class="c2" id="h.lce9uzwi51fm"><span class="c9 c3">Workshop Photo</span></h3><p class="c0"><span class="c4">A practical learning session focused on revising electronics fundamentals and developing a better understanding of basic circuit concepts.</span></p><h3 class="c2" id="h.nj6e006gwbps"><span class="c3 c9">Fusion 360</span></h3><p class="c0"><span class="c4">Hands-on work with Fusion 360 involving modeling and design assignments, helping improve technical skills and confidence.</span></p><h3 class="c2" id="h.fgjeykeikyb4"><span class="c9 c3">Reflection</span></h3><p class="c0"><span class="c4">A final reflection on the importance of connecting theoretical knowledge with practical engineering applications.</span></p><hr><p class="c5"><span class="c4"></span></p><h2 class="c6" id="h.u6wo4vv79sgh"><span class="c8 c3">Core Learning Focus</span></h2><p class="c0"><span>The week started with a revision of important electronics concepts. This helped us refresh our understanding of how circuits are designed and how current moves through different components. These basic concepts are essential because they provide the foundation for many engineering applications, including </span><span class="c3">microcontrollers, automation, machine design, and other electronic systems</span><span class="c4">.</span></p><p class="c0"><span>As the week continued, we worked on practical assignments using </span><span class="c3">Fusion 360</span><span class="c4">. These activities allowed us to apply organized and logical thinking to engineering design. It was helpful to understand how technical knowledge and digital design tools complement each other, particularly when developing accurate and realistic models for engineering applications.</span></p><p class="c0"><span>Overall, </span><span class="c3">Week 3</span><span class="c4">&nbsp;helped me recognize the importance of combining theoretical understanding with practical execution. It reinforced the idea that successful engineering requires more than creativity. A clear understanding of concepts, careful analysis, attention to detail, and consistent practice are equally important.</span></p><p class="c0"><span class="c4">This week provided a strong foundation for moving toward more advanced design and engineering projects in the coming weeks.</span></p><p class="c5"><span class="c4"></span></p></body></html>
