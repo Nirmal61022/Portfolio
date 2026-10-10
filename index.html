@@ -71,15 +71,6 @@ i<!DOCTYPE html>
   .nav-btn:hover{background:var(--card-hover);color:var(--accent2);}
   .nav-btn.active{background:var(--card-hover);color:var(--accent-glow);border-left-color:var(--accent);
     box-shadow:inset 0 0 20px rgba(176,38,255,.12);}
-  .sidebar-footer{margin-top:auto;width:100%;padding:20px 18px 26px;}
-  #editToggleBtn{
-    width:100%;padding:11px 10px;background:var(--card-hover);color:var(--accent2);
-    border:1px solid var(--border);font-weight:700;font-size:13px;border-radius:6px;
-    cursor:pointer;transition:all .15s ease;
-  }
-  #editToggleBtn:hover{border-color:var(--accent2);box-shadow:0 0 12px rgba(0,229,255,.25);}
-  #editToggleBtn.on{background:#1c0a2e;color:var(--accent-glow);border-color:var(--accent);box-shadow:0 0 14px rgba(176,38,255,.35);}
-
   /* ---------- MAIN AREA ---------- */
   .main{flex:1;position:relative;height:100vh;overflow:hidden;}
   canvas#bg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;}
@@ -320,9 +311,6 @@ i<!DOCTYPE html>
     <button class="nav-btn" data-section="protosem">📑&nbsp;&nbsp;ProtoSem</button>
     <button class="nav-btn" data-section="contact">📬&nbsp;&nbsp;Contact</button>
   </nav>
-  <div class="sidebar-footer">
-    <button id="editToggleBtn">✏️ Enable Edit Mode</button>
-  </div>
 </div>
 
 <div class="main">
@@ -757,9 +745,9 @@ function renderProtosem(){
   tab.className = 'week-tab active';
   tab.innerHTML = `
     <span class="wt-tag">WEEK 00</span>
-    <span class="wt-title">ProtoSem Document</span>`;
+    <span class="wt-title">Personality Development &amp; Self-Growth</span>`;
   tab.addEventListener('click', ()=>{
-    openAssignment('week%20assignments/Week00.html?refresh=3');
+    openAssignment('week%20assignments/week%2000.html?refresh=0');
   });
   tabsEl.appendChild(tab);
 
@@ -839,6 +827,39 @@ function renderProtosem(){
     openAssignment('week%20assignments/week07.html?refresh=7');
   });
   tabsEl.appendChild(weekSevenTab);
+
+  const weekEightTab = document.createElement('button');
+  weekEightTab.type = "button";
+  weekEightTab.className = 'week-tab';
+  weekEightTab.innerHTML = `
+    <span class="wt-tag">WEEK 08</span>
+    <span class="wt-title">ROS &amp; Differential Drive Bot</span>`;
+  weekEightTab.addEventListener('click', ()=>{
+    openAssignment('week%20assignments/week%2008.html?refresh=8');
+  });
+  tabsEl.appendChild(weekEightTab);
+
+  const weekNineTab = document.createElement('button');
+  weekNineTab.type = "button";
+  weekNineTab.className = 'week-tab';
+  weekNineTab.innerHTML = `
+    <span class="wt-tag">WEEK 09</span>
+    <span class="wt-title">Smart India Hackathon (SIH)</span>`;
+  weekNineTab.addEventListener('click', ()=>{
+    openAssignment('week%20assignments/week%2009.html?refresh=9');
+  });
+  tabsEl.appendChild(weekNineTab);
+
+  const weekTenTab = document.createElement('button');
+  weekTenTab.type = "button";
+  weekTenTab.className = 'week-tab';
+  weekTenTab.innerHTML = `
+    <span class="wt-tag">WEEK 10</span>
+    <span class="wt-title">Smart Factory Automation &amp; LabVIEW</span>`;
+  weekTenTab.addEventListener('click', ()=>{
+    openAssignment('week%20assignments/week%2010.html?refresh=10');
+  });
+  tabsEl.appendChild(weekTenTab);
 }
 
 function setProtoTab(tabName){
@@ -956,17 +977,6 @@ function toast(msg){
   t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'), 1800);
 }
-
-/* ============ EDIT MODE ============ */
-document.getElementById('editToggleBtn').addEventListener('click', ()=>{
-  editMode = !editMode;
-  document.body.classList.toggle('edit-mode', editMode);
-  const btn = document.getElementById('editToggleBtn');
-  btn.textContent = editMode ? "✅ Editing — Click to Exit" : "✏️ Enable Edit Mode";
-  btn.classList.toggle('on', editMode);
-  document.querySelectorAll('.editable').forEach(el=>{ el.contentEditable = editMode; });
-  renderAllDynamic();
-});
 
 /* ============ NAV ============ */
 const NAV_ORDER = ['home','about','skills','experience','projects','protosem','contact'];
