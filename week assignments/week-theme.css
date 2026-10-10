@@ -1,0 +1,86 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  color: #111111;
+  font-family: Arial, sans-serif;
+}
+
+body.doc-content {
+  width: min(100% - 48px, 900px);
+  max-width: none;
+  margin: 0 auto;
+  padding: 32px 0 48px;
+  background: #ffffff;
+}
+
+body.doc-content > h1 {
+  margin: 0 0 8px;
+  padding: 0;
+  color: #111111;
+  font-size: 26px;
+  line-height: 1.15;
+}
+
+body.doc-content > h1 span {
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+body.doc-content > h1 + h1 {
+  margin: 0 0 24px;
+  color: #ff0000;
+  font-size: 21px;
+  line-height: 1.2;
+}
+
+body.doc-content > h1 + h1 span {
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+body.doc-content h2 {
+  margin: 0 0 24px;
+  padding: 0;
+  color: #ff0000;
+  font-size: 21px;
+  line-height: 1.2;
+}
+
+body.doc-content h2 span {
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+body.doc-content p,
+body.doc-content li {
+  margin: 0 0 18px;
+  color: #111111;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+body.doc-content p span,
+body.doc-content li span {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+body.doc-content ul,
+body.doc-content ol {
+  margin: 0 0 18px;
+  padding-left: 40px;
+}
+
+@media (max-width: 700px) {
+  body.doc-content {
+    width: min(100% - 32px, 900px);
+    padding-top: 24px;
+  }
+}
