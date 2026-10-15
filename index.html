@@ -209,8 +209,8 @@ i<!DOCTYPE html>
   .proto-panel-empty{margin:0 40px 22px;min-height:150px;border:1px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--subtext);font-size:13.5px;}
   .mup-content{margin:0 40px 22px;padding:clamp(24px,4vw,42px);background:rgba(13,14,24,.96);border:1px solid #2b2b48;border-radius:8px;box-shadow:0 14px 40px rgba(0,0,0,.3),0 0 30px rgba(0,229,255,.06);text-align:left;}
   .mup-kicker{margin:0 0 12px;color:#00e5ff;font-size:12px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;}
-  .mup-title{margin:0 0 18px;color:#f4f6ff;font-size:clamp(26px,3.5vw,38px);font-weight:800;line-height:1.15;}
-  .mup-title span{display:inline-block;background:linear-gradient(to bottom,#168bff 50%,#ff3e55 50%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;}
+  .mup-title{margin:0 0 18px;color:#f4f6ff;font-size:clamp(26px,3.5vw,38px);font-weight:800;line-height:1;}
+  .mup-title span{display:inline-block;height:1em;line-height:1em;background:linear-gradient(to bottom,#168bff 0 50%,#ff3e55 50% 100%);background-repeat:no-repeat;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;}
   .mup-intro{margin:0 0 28px;color:#c5c9d8;font-size:16px;line-height:1.7;}
   .mup-content h3{margin:26px 0 12px;color:#00e5ff;font-size:21px;line-height:1.25;}
   .mup-contributions{margin:0 0 24px;padding-left:24px;color:#c5c9d8;font-size:15px;line-height:1.7;}
@@ -513,6 +513,20 @@ i<!DOCTYPE html>
             Your browser does not support video playback.
           </video>
           <p class="mup-video-notes">Tested the electromagnetic coil and observed overheating and smoke, indicating a failure in the coil design or electrical configuration. Analyzed the failure to understand current flow, coil resistance, heat generation, and insulation limits to guide future design improvements.</p>
+
+          <h3>Motor Direction Switching</h3>
+          <video class="mup-video" controls playsinline preload="metadata" aria-label="Dual-motor direction switching video">
+            <source src="./week%20assignments/motor%20switching.mp4" type="video/mp4">
+            Your browser does not support video playback.
+          </video>
+          <p class="mup-video-notes">Tested a dual-motor prototype with clockwise and anticlockwise rotation to demonstrate directional switching and visualize the concept of electromagnetic pole reversal. Explored motor direction control as a preliminary step toward understanding bidirectional electromagnetic actuation in the EMLT system.</p>
+
+          <h3>IR-Based North/South Pole Switching</h3>
+          <video class="mup-video" controls playsinline preload="metadata" aria-label="IR-based North and South pole switching video">
+            <source src="./week%20assignments/n%20s%20switching.mp4" type="video/mp4">
+            Your browser does not support video playback.
+          </video>
+          <p class="mup-video-notes">Developed an IR-based object detection prototype using two DC motors with clockwise and anticlockwise rotation to demonstrate directional switching, with blue and red LEDs visually representing North and South magnetic poles. Integrated sensor-triggered indication to visualize pole-switching concepts for the EMLT system and explore bidirectional electromagnetic control.</p>
         </article>
       </div>
       <div class="save-bar"><button class="btn" onclick="saveAll()">💾 Save Changes</button></div>
