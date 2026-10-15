@@ -915,6 +915,17 @@ function renderProtosem(){
     openAssignment('week%20assignments/week%2010.html?refresh=10');
   });
   tabsEl.appendChild(weekTenTab);
+
+  const weekElevenTab = document.createElement('button');
+  weekElevenTab.type = "button";
+  weekElevenTab.className = 'week-tab';
+  weekElevenTab.innerHTML = `
+    <span class="wt-tag">WEEK 11</span>
+    <span class="wt-title">PLC &amp; Pneumatics</span>`;
+  weekElevenTab.addEventListener('click', ()=>{
+    openAssignment('week%20assignments/week%2011.html?refresh=11');
+  });
+  tabsEl.appendChild(weekElevenTab);
 }
 
 function setProtoTab(tabName){
